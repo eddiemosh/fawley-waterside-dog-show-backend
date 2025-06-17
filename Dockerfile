@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install dependencies.
-RUN pip install fastapi uvicorn
+RUN pip install -r requirements.txt
 
 # Run the application.
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
