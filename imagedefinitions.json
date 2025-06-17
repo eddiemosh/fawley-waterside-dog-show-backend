@@ -1,0 +1,6 @@
+[
+  {
+    "name": "fawley-dog-show-backend",
+    "imageUri": "211125545455.dkr.ecr.eu-north-1.amazonaws.com/simple-docker-service:latest"
+  }
+]
