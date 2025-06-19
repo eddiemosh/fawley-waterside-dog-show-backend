@@ -2,7 +2,7 @@ import random
 
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(title="Beer-as-a-Service (BaaS)")
 
 top_uk_lagers = [
     "Stella Artois",
