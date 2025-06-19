@@ -26,7 +26,8 @@ top_uk_lagers = [
     "Madri Excepcional",
     "Coors"
 ]
+
+
 @app.get("/", tags=["Beer"])
 def get_beer():
-    return {"beer": top_uk_lagers[random.randint(0,len(top_uk_lagers)-1)]}
-
+    return {"beer": top_uk_lagers[random.randint(0, len(top_uk_lagers) - 1)]}
