@@ -35,7 +35,7 @@ top_uk_lagers = [
 
 @app.get("/", tags=["Beer"],
          responses={
-             status.HTTP_200_OK: {"description": "I love beer!"}
+             status.HTTP_200_OK: {"description": "i love beer!"}
          }
          )
 def get_beer():
