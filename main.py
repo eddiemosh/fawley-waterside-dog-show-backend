@@ -35,7 +35,7 @@ top_uk_lagers = [
 
 @app.get("/", tags=["Beer"],
          responses={
-             status.HTTP_200_OK: {"description": "i love beer!"}
+             status.HTTP_200_OK: {"description": "i love beer! <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Beer_mug.svg/1200px-Beer_mug.svg.png' alt='beer'>"}
          }
          )
 def get_beer():
