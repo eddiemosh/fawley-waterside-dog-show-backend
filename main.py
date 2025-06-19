@@ -1,6 +1,7 @@
 import random
 
 from fastapi import FastAPI
+from starlette import status
 
 app = FastAPI(title="Beer-as-a-Service (BaaS)")
 
@@ -28,6 +29,10 @@ top_uk_lagers = [
 ]
 
 
-@app.get("/", tags=["Beer"])
+@app.get("/", tags=["Beer"],
+         responses={
+             status.HTTP_200_OK: {"description": "I love beer!"}
+         }
+         )
 def get_beer():
     return {"beer": top_uk_lagers[random.randint(0, len(top_uk_lagers) - 1)]}
