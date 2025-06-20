@@ -3,12 +3,7 @@ import random
 from fastapi import FastAPI
 from starlette import status
 
-app = FastAPI(title="Beer-as-a-Service (BaaS)",
-              description="""
-    Welcome to **Beer-as-a-Service**!  
-    ![Cheers Beer](https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Beer_mug.svg/1200px-Beer_mug.svg.png)  
-    Enjoy your random beer 🍺
-    """)
+app = FastAPI(title="Beer-as-a-Service (BaaS)")
 
 top_uk_lagers = [
     "Stella Artois",
