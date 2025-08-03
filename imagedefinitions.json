@@ -1,6 +1,6 @@
 [
   {
     "name": "backend",
-    "imageUri": "211125545455.dkr.ecr.eu-north-1.amazonaws.com/dogshow-ui"
+    "imageUri": "211125545455.dkr.ecr.eu-north-1.amazonaws.com/simple-docker-service-06d902c306fb:latest"
   }
 ]
