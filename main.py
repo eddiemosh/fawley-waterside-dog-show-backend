@@ -1,40 +1,63 @@
-import random
+import stripe
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
+import os
 
-from fastapi import FastAPI
-from starlette import status
+secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
 
-app = FastAPI(title="Beer-as-a-Service (BaaS)")
+stripe.api_version = "2025-03-31.basil"
+stripe.api_key = secret_key
 
-top_uk_lagers = [
-    "Stella Artois",
-    "Budweiser",
-    "Foster’s",
-    "Carling",
-    "San Miguel",
-    "Carlsberg",
-    "Heineken",
-    "Peroni Nastro Azzurro",
-    "Corona",
-    "Desperados",
-    "Kronenbourg 1664",
-    "Beck’s",
-    "Staropramen",
-    "John Smith’s",
-    "Tennent’s Lager",
-    "Asahi Super Dry",
-    "Tyskie",
-    "Birra Moretti",
-    "Madri Excepcional",
-    "Coors"
+app = FastAPI(title="Dog Show Backend")
+
+currency = "gbp"
+origins = [
+    "http://localhost:3000",  # Local frontend (React dev server)
+    "https://fawleydogshow.com",  # Your deployed frontend domain
 ]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.get("/", tags=["Beer"],
-         responses={
-             status.HTTP_200_OK: {
-                 "description": "I love beer! <br><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Beer_mug.svg/1200px-Beer_mug.svg.png' alt='beer' style='width:50%;'/>"
-             }
-         }
-         )
-def get_beer():
-    return {"beer": top_uk_lagers[random.randint(0, len(top_uk_lagers) - 1)]}
+YOUR_DOMAIN = "https://fawleydogshow.com"
+
+
+class PostPaymentIntent(BaseModel):
+    amount: int
+    test_mode: bool = False
+
+
+@app.post("/create-payment-intent", tags=["Payments"])
+def submit_payment(payment: PostPaymentIntent):
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, price_1234) of the product you want to sell
+                    "price": "price_1RsD9ICYSxVmD9YEw0WSgElm",
+                    "quantity": 1,
+                },
+            ],
+            mode="payment",
+            success_url=YOUR_DOMAIN,
+            cancel_url=YOUR_DOMAIN,
+            automatic_tax={"enabled": True},
+        )
+        return {
+            "sessionId": checkout_session.id,
+            "url": checkout_session.url,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
