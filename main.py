@@ -33,17 +33,30 @@ class PostPaymentIntent(BaseModel):
     test_mode: bool = False
 
 
+normal_ticket_price_id = ""
+pedigree_ticket_price_id = "price_1RsD9ICYSxVmD9YEw0WSgElm"
+
+
 @app.post("/create-payment-intent", tags=["Payments"])
-def submit_payment(payment: PostPaymentIntent):
+def submit_payment(num_of_pedigree_tickets: int, num_of_normal_tickets: int):
+    line_items = []
+    if pedigree_ticket_price_id:
+        line_items.append(
+            {
+                "price": pedigree_ticket_price_id,
+                "quantity": num_of_pedigree_tickets,
+            }
+        )
+    if normal_ticket_price_id:
+        line_items.append(
+            {
+                "price": normal_ticket_price_id,
+                "quantity": num_of_normal_tickets,
+            }
+        )
     try:
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, price_1234) of the product you want to sell
-                    "price": "price_1RsD9ICYSxVmD9YEw0WSgElm",
-                    "quantity": 1,
-                },
-            ],
+            line_items=line_items,
             mode="payment",
             success_url=YOUR_DOMAIN,
             cancel_url=YOUR_DOMAIN,
@@ -56,9 +69,11 @@ def submit_payment(payment: PostPaymentIntent):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.get("/", tags=["Health"])
 def get_health():
     return True
+
 
 if __name__ == "__main__":
     import uvicorn
