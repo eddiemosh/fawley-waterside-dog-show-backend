@@ -56,6 +56,9 @@ def submit_payment(payment: PostPaymentIntent):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/", tags=["Health"])
+def get_health():
+    return True
 
 if __name__ == "__main__":
     import uvicorn
