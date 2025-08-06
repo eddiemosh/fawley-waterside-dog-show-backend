@@ -1,7 +1,7 @@
 import uuid
 
 from src.data_models.order_data_models import Order, DoggieInfo
-from src.routers.payment_router import AllDogTickets, PedigreeTickets
+from src.data_models.tickets_data_models import PedigreeTickets, AllDogTickets
 from src.services.database import Database
 
 

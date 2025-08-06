@@ -1,4 +1,5 @@
 import os
+from urllib.parse import quote_plus
 
 import boto3
 from pymongo import MongoClient
@@ -13,7 +14,7 @@ class Database:
 
     def __init__(self):
         db_password = os.getenv("DB_PASSWORD")
-        connection_string = f"mongodb://dogshow:{db_password}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
+        connection_string = f"mongodb://dogshow:{quote_plus(db_password)}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
         mongo_client = MongoClient(connection_string)
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
