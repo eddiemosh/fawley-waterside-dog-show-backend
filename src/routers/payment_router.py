@@ -14,12 +14,12 @@ order_service = OrderService()
 
 @router.post("/create-payment-intent", tags=["Payments"])
 def submit_payment(
-        first_name: str,
-        last_name: str,
-        email_address: str,
-        doggie_info: dict,
-        pedigree_tickets: dict,
-        all_dog_tickets: dict,
+    first_name: str,
+    last_name: str,
+    email_address: str,
+    doggie_info: dict,
+    pedigree_tickets: dict,
+    all_dog_tickets: dict,
 ):
     print(f"Creating order with name: {first_name}, {last_name}")
     order = order_service.create_order(

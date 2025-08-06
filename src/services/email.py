@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 
+
 class EmailService:
     @staticmethod
     def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str) -> bool:
@@ -31,15 +32,15 @@ class EmailService:
         if not from_password:
             raise ValueError(f"No email password")
         msg = MIMEMultipart()
-        msg['From'] = from_email
-        msg['To'] = to_email
-        msg['Subject'] = subject
+        msg["From"] = from_email
+        msg["To"] = to_email
+        msg["Subject"] = subject
 
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body, "plain"))
 
         # Connect and send
         try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server = smtplib.SMTP("smtp.gmail.com", 587)
             server.starttls()
             server.login(from_email, from_password)
             server.send_message(msg)
