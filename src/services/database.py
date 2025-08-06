@@ -15,8 +15,6 @@ class Database:
     def __init__(self):
         db_credentials = json.loads(os.environ.get("DB_CREDENTIALS"))
         db_password = db_credentials.get("password")
-        print(f"password shortened is type {type(db_password)}")
-        print(f"and content {db_password}")
         connection_string = f"mongodb://dogshow:{quote_plus(db_password)}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
         mongo_client = MongoClient(connection_string)
         db = mongo_client["dogshow"]

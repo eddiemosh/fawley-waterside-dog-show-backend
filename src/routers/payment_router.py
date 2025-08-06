@@ -5,7 +5,7 @@ from src.constants.stripe_price_ids import test_pedigree_price_ids, test_all_dog
 from src.services.orders import OrderService
 from src.utils.stripe_utils import generate_line_items
 
-router = APIRouter(prefix="payment", tags=["Payments"])
+router = APIRouter(prefix="/payment", tags=["Payments"])
 
 YOUR_DOMAIN = "https://fawleydogshow.com"
 
