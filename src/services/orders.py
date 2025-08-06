@@ -21,7 +21,7 @@ class OrderService:
         pedigree_tickets: dict,
         all_dog_tickets: dict,
         order_status: bool = False,
-    ):
+    ) -> Order:
         """
         Create an order in the database
         :return: the order id
@@ -45,8 +45,10 @@ class OrderService:
             result = self.database_service.create_order(order=order)
             if not result:
                 raise Exception(f"False result when attempting to create order in db")
+            return order
         except Exception as ex:
             print(f"Exception {ex} when attempting to create order")
+            raise ex
 
     def update_order_status(self, order_id: str, status: bool):
         result = self.database_service.update_order(order_id=order_id, status=status)

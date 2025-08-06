@@ -42,7 +42,7 @@ def create_order(
             all_dog_tickets=all_dog_tickets,
             order_status=order_status,
         )
-        return result
+        return {"message": f"Order created with id {result.order_id}"}
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 
