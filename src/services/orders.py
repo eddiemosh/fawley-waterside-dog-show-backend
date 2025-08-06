@@ -1,5 +1,5 @@
 import uuid
-
+import json
 from src.data_models.order_data_models import Order, DoggieInfo
 from src.data_models.tickets_data_models import PedigreeTickets, AllDogTickets
 from src.services.database import Database
@@ -34,7 +34,8 @@ class OrderService:
             for info in doggie_info:
                 print("info is", info)
                 print(f"info type is {type(info)}")
-                list_of_dogs.append(DoggieInfo(**info))
+                info_json = json.loads(info)
+                list_of_dogs.append(DoggieInfo(**info_json))
 
             order = Order(
                 order_id=order_id,
