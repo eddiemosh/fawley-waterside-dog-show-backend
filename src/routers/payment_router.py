@@ -1,27 +1,28 @@
 import stripe
 from fastapi import APIRouter, HTTPException
 
-from src.constants.stripe_price_ids import test_pedigree_price_ids
-from src.data_models.tickets_data_models import PedigreeTickets, AllDogTickets
+from src.constants.stripe_price_ids import test_pedigree_price_ids, test_all_dog_price_ids
 from src.services.orders import OrderService
 from src.utils.stripe_utils import generate_line_items
 
-router = APIRouter(prefix="", tags=["Payments"])
+router = APIRouter(prefix="payment", tags=["Payments"])
 
 YOUR_DOMAIN = "https://fawleydogshow.com"
+
+order_service = OrderService()
 
 
 @router.post("/create-payment-intent", tags=["Payments"])
 def submit_payment(
-    first_name: str,
-    last_name: str,
-    email_address: str,
-    doggie_info: dict,
-    pedigree_tickets: PedigreeTickets,
-    all_dog_tickets: AllDogTickets,
+        first_name: str,
+        last_name: str,
+        email_address: str,
+        doggie_info: dict,
+        pedigree_tickets: dict,
+        all_dog_tickets: dict,
 ):
     print(f"Creating order with name: {first_name}, {last_name}")
-    order = OrderService.create_order(
+    order = order_service.create_order(
         first_name=first_name,
         last_name=last_name,
         email_address=email_address,
@@ -34,8 +35,8 @@ def submit_payment(
         line_items = []
         # line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=pedigree_price_ids)
         # line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=all_dog_price_ids)
-        line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=test_pedigree_price_ids)
-        line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=test_pedigree_price_ids)
+        line_items += generate_line_items(ticket_data=order.pedigree_tickets, price_ids=test_pedigree_price_ids)
+        line_items += generate_line_items(ticket_data=order.all_dog_tickets, price_ids=test_all_dog_price_ids)
 
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")

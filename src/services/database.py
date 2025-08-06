@@ -12,12 +12,6 @@ class Database:
     """
 
     def __init__(self):
-        # Create a DynamoDB client (using default AWS config or environment variables)
-        dynamodb = boto3.resource(
-            "dynamodb",
-            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-        )
         db_password = os.getenv("DB_PASSWORD")
         connection_string = f"mongodb://dogshow:{db_password}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
         mongo_client = MongoClient(connection_string)

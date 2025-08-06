@@ -13,7 +13,7 @@ stripe.api_key = secret_key
 
 app = FastAPI(title="Dog Show Backend")
 app.include_router(payment_router.router)
-currency = "gbp"
+
 origins = [
     "http://localhost:3000",  # Local frontend (React dev server)
     "https://fawleydogshow.com",  # Your deployed frontend domain

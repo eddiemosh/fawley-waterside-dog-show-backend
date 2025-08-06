@@ -31,7 +31,7 @@ all_dog_price_ids = {
 }
 
 test_pedigree_price_ids = {
-    "any_puppy": "price_XXX1",
+    "any_puppy": "price_1RtBgGCxiZ7gi8V5BJKzRLj5",
     "any_junior": "price_XXX2",
     "any_gundog": "price_XXX3",
     "any_utility": "price_XXX4",

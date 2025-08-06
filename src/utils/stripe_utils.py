@@ -1,8 +1,13 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
-def generate_line_items(ticket_data: BaseModel, price_ids: dict) -> list:
+def generate_line_items(ticket_data: Optional[BaseModel], price_ids: dict) -> list:
+    if not ticket_data:
+        return []
     line_items = []
+
     for field_name, quantity in ticket_data.model_dump().items():
         if quantity > 0:
             price_id = price_ids.get(field_name)
