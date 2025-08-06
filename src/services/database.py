@@ -14,6 +14,8 @@ class Database:
 
     def __init__(self):
         db_password = os.getenv("DB_PASSWORD")
+        print(f"password shortened is type {type(db_password)}")
+        print(f"and content {db_password[0:2]}")
         connection_string = f"mongodb://dogshow:{quote_plus(db_password)}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
         mongo_client = MongoClient(connection_string)
         db = mongo_client["dogshow"]
