@@ -1,6 +1,7 @@
 # Use the official Python image.
 FROM python:3.9-slim
 
+RUN wget https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem -O /app/global-bundle.pem
 # Set the working directory.
 WORKDIR /app
 

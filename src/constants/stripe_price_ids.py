@@ -1,0 +1,63 @@
+pedigree_price_ids = {
+    "any_puppy": "price_XXX1",
+    "any_junior": "price_XXX2",
+    "any_gundog": "price_XXX3",
+    "any_utility": "price_XXX4",
+    "any_hound": "price_XXX5",
+    "any_toy": "price_XXX6",
+    "any_working": "price_XXX7",
+    "any_pastoral": "price_XXX8",
+    "any_terrier": "price_XXX9",
+    "any_open": "price_XXX10",
+    "any_veteran": "price_XXX11",
+    "junior_handler": "price_XXX12",
+}
+
+all_dog_price_ids = {
+    "puppy": "price_FUN1",
+    "prettiest": "price_FUN2",
+    "best_condition": "price_FUN3",
+    "best_rescue": "price_FUN4",
+    "waggiest_tale": "price_FUN5",
+    "childs_best_friend": "price_FUN6",
+    "fancy_dress": "price_FUN7",
+    "handsome": "price_FUN8",
+    "fluffiest": "price_FUN9",
+    "scruffiest": "price_FUN10",
+    "smooth": "price_FUN11",
+    "looks_like_owner": "price_FUN12",
+    "obedience": "price_FUN13",
+    "golden_oldie": "price_FUN14",
+}
+
+test_pedigree_price_ids = {
+    "any_puppy": "price_XXX1",
+    "any_junior": "price_XXX2",
+    "any_gundog": "price_XXX3",
+    "any_utility": "price_XXX4",
+    "any_hound": "price_XXX5",
+    "any_toy": "price_XXX6",
+    "any_working": "price_XXX7",
+    "any_pastoral": "price_XXX8",
+    "any_terrier": "price_XXX9",
+    "any_open": "price_XXX10",
+    "any_veteran": "price_XXX11",
+    "junior_handler": "price_XXX12",
+}
+
+test_all_dog_price_ids = {
+    "puppy": "price_FUN1",
+    "prettiest": "price_FUN2",
+    "best_condition": "price_FUN3",
+    "best_rescue": "price_FUN4",
+    "waggiest_tale": "price_FUN5",
+    "childs_best_friend": "price_FUN6",
+    "fancy_dress": "price_FUN7",
+    "handsome": "price_FUN8",
+    "fluffiest": "price_FUN9",
+    "scruffiest": "price_FUN10",
+    "smooth": "price_FUN11",
+    "looks_like_owner": "price_FUN12",
+    "obedience": "price_FUN13",
+    "golden_oldie": "price_FUN14",
+}
