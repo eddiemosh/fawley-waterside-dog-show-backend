@@ -25,6 +25,10 @@ class Database:
         result = self.orders_collection.find_one({"order_id": order_id}, {"id": 0})
         return result
 
+    def get_orders(self) -> list:
+        results = self.orders_collection.find({}, {"id": 0})
+        return list(results)
+
     def create_order(self, order: Order) -> bool:
         """
         Create order
@@ -44,3 +48,4 @@ class Database:
         if result.matched_count:
             raise Exception("Order not found")
         return False
+

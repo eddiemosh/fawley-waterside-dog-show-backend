@@ -57,3 +57,8 @@ class OrderService:
     def get_order(self, order_id: str):
         result = self.database_service.get_order(order_id=order_id)
         return Order(**result)
+
+    def get_orders(self):
+        results = self.database_service.get_orders()
+        orders = [Order(**result) for result in results]
+        return orders

@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
@@ -12,12 +13,18 @@ order_service = OrderService()
 
 
 @router.get("/")
-def get_order(order_id: str):
+def get_order(order_id: Optional[str] = None):
     try:
-        order = order_service.get_order(order_id=order_id)
-        if order:
-            return order
-        raise HTTPException(status_code=404, detail="Order Not Found")
+        if order_id:
+            order = order_service.get_order(order_id=order_id)
+            if order:
+                return order
+            raise HTTPException(status_code=404, detail="Order Not Found")
+        else:
+            orders = order_service.get_orders()
+            if not orders:
+                raise Exception("Failure getting all orders")
+            return orders
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 
@@ -64,3 +71,4 @@ def successful_order(order_id: str) -> int:
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Error performing successful order workflow due to {str(ex)}")
+
