@@ -21,17 +21,18 @@ def submit_payment(
     pedigree_tickets: dict,
     all_dog_tickets: dict,
 ):
-    print(f"Creating order with name: {first_name}, {last_name}")
-    order = order_service.create_order(
-        first_name=first_name,
-        last_name=last_name,
-        email_address=email_address,
-        doggie_info=doggie_info,
-        pedigree_tickets=pedigree_tickets,
-        all_dog_tickets=all_dog_tickets,
-    )
-    print(f"Created order with result {order}")
+
     try:
+        print(f"Creating order with name: {first_name}, {last_name}")
+        order = order_service.create_order(
+            first_name=first_name,
+            last_name=last_name,
+            email_address=email_address,
+            doggie_info=doggie_info,
+            pedigree_tickets=pedigree_tickets,
+            all_dog_tickets=all_dog_tickets,
+        )
+        print(f"Created order with result {order}")
         line_items = []
         # line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=pedigree_price_ids)
         # line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=all_dog_price_ids)

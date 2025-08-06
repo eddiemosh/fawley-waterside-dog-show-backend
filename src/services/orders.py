@@ -31,11 +31,10 @@ class OrderService:
             list_of_dogs = []
             print("Doggie info is", doggie_info)
             print(f"Doggie info type is {type(doggie_info)}")
-            for info in doggie_info:
+            for key, info in doggie_info.items():
                 print("info is", info)
                 print(f"info type is {type(info)}")
-                info_json = json.loads(info)
-                list_of_dogs.append(DoggieInfo(**info_json))
+                list_of_dogs.append(DoggieInfo(**info))
 
             order = Order(
                 order_id=order_id,
