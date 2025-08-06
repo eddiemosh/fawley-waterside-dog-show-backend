@@ -8,8 +8,10 @@ def generate_line_items(ticket_data: BaseModel, price_ids: dict) -> list:
             price_id = price_ids.get(field_name)
             if not price_id:
                 raise ValueError(f"Missing price ID for ticket type: {field_name}")
-            line_items.append({
-                "price": price_id,
-                "quantity": quantity,
-            })
+            line_items.append(
+                {
+                    "price": price_id,
+                    "quantity": quantity,
+                }
+            )
     return line_items

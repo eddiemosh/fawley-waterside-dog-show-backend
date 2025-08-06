@@ -1,30 +1,11 @@
 import uuid
-from typing import Optional
 
-from pydantic import BaseModel
-
+from src.data_models.order_data_models import Order, DoggieInfo
 from src.routers.payment_router import AllDogTickets, PedigreeTickets
 from src.services.database import Database
 
 
-class DoggieInfo(BaseModel):
-    name: str
-    date_of_birth: str
-    sex: str
-
-
-class Order(BaseModel):
-    order_id: str
-    first_name: str
-    last_name: str
-    email_address: str
-    doggie_info: list[DoggieInfo]
-    pedigree_tickets: Optional[PedigreeTickets] = None
-    all_dog_tickets: Optional[AllDogTickets] = None
-    order_status: bool = False
-
-
-class OrdersService:
+class OrderService:
     """
     Manage orders
     """
@@ -39,7 +20,7 @@ class OrdersService:
         doggie_info: dict,
         pedigree_tickets: dict,
         all_dog_tickets: dict,
-        order_status: bool = False
+        order_status: bool = False,
     ):
         """
         Create an order in the database
@@ -74,4 +55,3 @@ class OrdersService:
     def get_order(self, order_id: str):
         result = self.database_service.get_order(order_id=order_id)
         return Order(**result)
-
