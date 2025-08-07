@@ -32,6 +32,14 @@ class Database:
         self.orders_collection.create_index("order_id", unique=True)
         self._initialized = True
 
+        orders = self.get_orders()
+        count=0
+        for order in orders:
+            if order.first_name == "Edward" and order.date_of_purchase is None and len(order.order_id) > 10:
+                self.delete_order(order_id=order.order_id)
+                count+=1
+        print(f"Deleted {count} orders")
+
     def get_order(self, order_id: str) -> dict:
         result = self.orders_collection.find_one({"order_id": order_id}, {"id": 0})
         return result
