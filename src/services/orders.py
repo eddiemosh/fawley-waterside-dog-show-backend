@@ -30,11 +30,7 @@ class OrderService:
         try:
             order_id = str(uuid.uuid4())
             list_of_dogs = []
-            print("Doggie info is", doggie_info)
-            print(f"Doggie info type is {type(doggie_info)}")
             for key, info in doggie_info.items():
-                print("info is", info)
-                print(f"info type is {type(info)}")
                 list_of_dogs.append(DoggieInfo(**info))
 
             order = Order(

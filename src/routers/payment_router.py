@@ -14,7 +14,8 @@ YOUR_DOMAIN = "https://fawleydogshow.com"
 order_service = OrderService()
 
 secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
-
+if not secret_key:
+    raise ValueError(f"Stripe key not loaded!")
 stripe.api_version = "2025-03-31.basil"
 stripe.api_key = secret_key
 
