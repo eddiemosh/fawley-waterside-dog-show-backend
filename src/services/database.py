@@ -1,7 +1,7 @@
+import json
 import os
 from urllib.parse import quote_plus
 
-import json
 from pymongo import MongoClient
 
 from src.services.orders import Order
@@ -42,19 +42,9 @@ class Database:
         return False
 
     def update_order(self, order_id: str, status: bool):
-        result = self.orders_collection.update_one(
-            {
-                "order_id": order_id
-            },
-            {
-                "$set": {
-                    "order_status": status
-                }
-            }
-        )
+        result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"order_status": status}})
         if result.modified_count:
             return result
         if result.matched_count:
             raise Exception("Order not found")
         return False
-

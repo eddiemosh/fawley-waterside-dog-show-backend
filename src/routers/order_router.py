@@ -71,4 +71,3 @@ def successful_order(order_id: str) -> int:
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Error performing successful order workflow due to {str(ex)}")
-

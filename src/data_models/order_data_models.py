@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from src.data_models.tickets_data_models import PedigreeTickets, AllDogTickets
+from src.data_models.tickets_data_models import AllDogTickets, PedigreeTickets
 
 
 class PostPaymentIntent(BaseModel):

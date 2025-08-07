@@ -1,7 +1,8 @@
-import uuid
 import json
-from src.data_models.order_data_models import Order, DoggieInfo
-from src.data_models.tickets_data_models import PedigreeTickets, AllDogTickets
+import uuid
+
+from src.data_models.order_data_models import DoggieInfo, Order
+from src.data_models.tickets_data_models import AllDogTickets, PedigreeTickets
 from src.services.database import Database
 
 

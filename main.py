@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src.routers import payment_router, order_router
+from src.routers import order_router, payment_router
 
 app = FastAPI(title="Dog Show Backend")
 app.include_router(payment_router.router)
