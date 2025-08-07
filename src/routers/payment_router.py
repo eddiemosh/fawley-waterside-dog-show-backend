@@ -59,7 +59,9 @@ def submit_payment(
                 automatic_tax={"enabled": True},
             )
         except Exception as ex:
-            print(f"Stripe checkout session creation failed due to {str(ex)} with line items {line_items} and order {order.model_dump()}")
+            print(
+                f"Stripe checkout session creation failed due to {str(ex)} with line items {line_items} and order {order.model_dump()}"
+            )
             raise ex
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
