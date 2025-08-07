@@ -45,6 +45,6 @@ class Database:
         result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"order_status": status}})
         if result.modified_count:
             return result
-        if result.matched_count:
+        if not result.matched_count:
             raise Exception("Order not found")
         return False
