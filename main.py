@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src.routers import order_router, payment_router
+from src.routers import order_router, payment_router, analytics_router
 
-app = FastAPI(title="Dog Show Backend")
+app = FastAPI(title="Dogshow Backend")
+
 app.include_router(payment_router.router)
 app.include_router(order_router.router)
+app.include_router(analytics_router.router)
+
 origins = [
     "http://localhost:3000",  # Local frontend (React dev server)
     "https://fawleydogshow.com",  # Your deployed frontend domain
