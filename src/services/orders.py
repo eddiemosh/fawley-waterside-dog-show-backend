@@ -1,6 +1,8 @@
 import json
 import uuid
 
+from pymongo.results import UpdateResult
+
 from src.data_models.order_data_models import DoggieInfo, Order
 from src.data_models.tickets_data_models import AllDogTickets, PedigreeTickets
 from src.services.database import Database
@@ -51,9 +53,9 @@ class OrderService:
             print(f"Exception {ex} when attempting to create order")
             raise ex
 
-    def update_order_status(self, order_id: str, status: bool):
+    def update_order_status(self, order_id: str, status: bool) -> UpdateResult:
         result = self.database_service.update_order(order_id=order_id, status=status)
-        return Order(**result)
+        return result
 
     def get_order(self, order_id: str):
         result = self.database_service.get_order(order_id=order_id)

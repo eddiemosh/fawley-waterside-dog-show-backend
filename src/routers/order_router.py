@@ -60,10 +60,12 @@ def successful_order(order_id: dict) -> int:
         order_id_value = order_id.get("order_id")
         if not order_id_value:
             raise Exception("Order ID not provided in request body")
-        order = order_service.update_order_status(order_id=order_id_value, status=True)
-        if not order:
-            raise Exception("Error updating order")
+        update_result = order_service.update_order_status(order_id=order_id_value, status=True)
+        if not update_result:
+            raise Exception(f"Error updating order {update_result}")
         print(f"Successfully updated order {order_id}")
+
+        order = order_service.get_order(order_id=order_id_value)
 
         email_result = EmailService.send_confirmation_email(
             to_email=order.email_address, subject="Order Confirmation", name=order.first_name, order_id=order.order_id
