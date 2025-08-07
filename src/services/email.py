@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 
 class EmailService:
     @staticmethod
-    def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str) -> bool:
+    def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str, tickets: list[str]) -> bool:
         """
         Send an email to customers
         :return: True if email is successful
@@ -18,6 +18,9 @@ class EmailService:
         Thank you for your order!
     
         Order ID: {order_id}
+        
+        Tickets purchased:
+        {', '.join(tickets) if tickets else 'No tickets purchased.'}
     
         This is your confirmation email. Please keep this for your records. 
         If you run into any trouble, speak to organisers or send an email with your order id to hardyedward18@gmail.com.

@@ -66,9 +66,16 @@ def successful_order(order_id: dict) -> int:
         print(f"Successfully updated order {order_id}")
 
         order = order_service.get_order(order_id=order_id_value)
+        purchased_tickets = []
+        combined_tickets = (order.pedigree_tickets.model_dump() if order.pedigree_tickets else {}) + (
+            order.all_dog_tickets.model_dump() if order.all_dog_tickets else {}
+        )
+        for ticket_name, ticket_data in combined_tickets.items():
+            if ticket_data.get("quantity"):
+                purchased_tickets.append(ticket_name)
 
         email_result = EmailService.send_confirmation_email(
-            to_email=order.email_address, subject="Order Confirmation", name=order.first_name, order_id=order.order_id
+            to_email=order.email_address, subject="Order Confirmation", name=order.first_name, order_id=order.order_id, tickets=purchased_tickets
         )
         if not email_result:
             raise Exception(f"Failed to send email")
