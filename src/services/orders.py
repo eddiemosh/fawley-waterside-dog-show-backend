@@ -65,3 +65,12 @@ class OrderService:
         results = self.database_service.get_orders()
         orders = [Order(**result) for result in results]
         return orders
+
+    def get_orders_by_ticket(self, ticket: str):
+        results = self.database_service.get_orders_by_ticket(ticket=ticket)
+        orders = [Order(**result) for result in results]
+        return orders
+
+    def delete_order(self, order_id: str):
+        result = self.database_service.delete_order(order_id=order_id)
+        return result

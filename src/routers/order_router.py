@@ -83,3 +83,17 @@ def successful_order(order_id: dict) -> int:
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Error performing successful order workflow due to {str(ex)}")
+
+
+@router.delete("/delete", status_code=HTTPStatus.ACCEPTED)
+def delete_order(order_id: dict) -> int:
+    try:
+        order_id_value = order_id.get("order_id")
+        if not order_id_value:
+            raise Exception("Order ID not provided in request body")
+        result = order_service.database_service.delete_order(order_id=order_id_value)
+        if not result:
+            raise Exception(f"Failed to delete order with id {order_id_value}")
+        return int(HTTPStatus.ACCEPTED)
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=f"Error deleting order due to {str(ex)}")

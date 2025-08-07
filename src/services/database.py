@@ -9,10 +9,18 @@ from src.services.orders import Order
 
 class Database:
     """
-    Database manager
+    Database manager (Singleton)
     """
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Database, cls).__new__(cls)
+        return cls._instance
 
     def __init__(self):
+        if hasattr(self, '_initialized') and self._initialized:
+            return
         db_credentials = json.loads(os.environ.get("DB_CREDENTIALS"))
         db_password = db_credentials.get("password")
         connection_string = f"mongodb://dogshow:{quote_plus(db_password)}@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
@@ -20,6 +28,7 @@ class Database:
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
         self.orders_collection.create_index("order_id")
+        self._initialized = True
 
     def get_order(self, order_id: str) -> dict:
         result = self.orders_collection.find_one({"order_id": order_id}, {"id": 0})
@@ -29,13 +38,23 @@ class Database:
         results = self.orders_collection.find({}, {"id": 0})
         return list(results)
 
+    def get_orders_by_ticket(self, ticket: str):
+        """
+        Get all orders by ticket
+        :param ticket: the name of the ticket to filter by
+        :return: all orders with that ticket present
+        """
+        pedigree_results = list(self.orders_collection.find({"pedigree_tickets": ticket}, {"id": 0}))
+        all_dog_results = list(self.orders_collection.find({"all_dog_tickets": ticket}, {"id": 0}))
+        return pedigree_results + all_dog_results
+
     def create_order(self, order: Order) -> bool:
         """
         Create order
         :param order: order details
         :return: true if order was created in db
         """
-        result = self.orders_collection.insert_one(order.model_dump())
+        result = self.orders_collection.insert_one(order.model_dump(exclude_none=True))
         if result.inserted_id:
             print("Order created with result", result)
             return True
@@ -47,4 +66,12 @@ class Database:
             return result
         if not result.matched_count:
             raise Exception("Order not found")
+        return False
+
+    def delete_order(self, order_id: str) -> bool:
+        result = self.orders_collection.delete_one({"order_id": order_id})
+        if result.deleted_count:
+            print(f"Order {order_id} deleted successfully")
+            return True
+        print(f"Order {order_id} not found or already deleted")
         return False

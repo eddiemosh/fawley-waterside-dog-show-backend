@@ -1,33 +1,35 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class PedigreeTickets(BaseModel):
-    any_puppy: int = 0
-    any_junior: int = 0
-    any_gundog: int = 0
-    any_utility: int = 0
-    any_hound: int = 0
-    any_toy: int = 0
-    any_working: int = 0
-    any_pastoral: int = 0
-    any_terrier: int = 0
-    any_open: int = 0
-    any_veteran: int = 0
-    junior_handler: int = 0
+    any_puppy: Optional[int] = None
+    any_junior: Optional[int] = None
+    any_gundog: Optional[int] = None
+    any_utility: Optional[int] = None
+    any_hound: Optional[int] = None
+    any_toy: Optional[int] = None
+    any_working: Optional[int] = None
+    any_pastoral: Optional[int] = None
+    any_terrier: Optional[int] = None
+    any_open: Optional[int] = None
+    any_veteran: Optional[int] = None
+    junior_handler: Optional[int] = None
 
 
 class AllDogTickets(BaseModel):
-    puppy: int = 0
-    prettiest: int = 0
-    best_condition: int = 0
-    best_rescue: int = 0
-    waggiest_tale: int = 0
-    childs_best_friend: int = 0
-    fancy_dress: int = 0
-    handsome: int = 0
-    fluffiest: int = 0
-    scruffiest: int = 0
-    smooth: int = 0
-    looks_like_owner: int = 0
-    obedience: int = 0
-    golden_oldie: int = 0
+    puppy: Optional[int] = None
+    prettiest: Optional[int] = None
+    best_condition: Optional[int] = None
+    best_rescue: Optional[int] = None
+    waggiest_tale: Optional[int] = None
+    childs_best_friend: Optional[int] = None
+    fancy_dress: Optional[int] = None
+    handsome: Optional[int] = None
+    fluffiest: Optional[int] = None
+    scruffiest: Optional[int] = None
+    smooth: Optional[int] = None
+    looks_like_owner: Optional[int] = None
+    obedience: Optional[int] = None
+    golden_oldie: Optional[int] = None

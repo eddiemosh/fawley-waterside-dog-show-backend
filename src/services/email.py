@@ -45,7 +45,7 @@ class EmailService:
 
         # Email setup
         from_email = "fawleydogshow@gmail.com"
-        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")  # Use an App Password for Gmail
+        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
         if not from_password:
             raise ValueError(f"No email password")
         msg = MIMEMultipart()
