@@ -2,6 +2,7 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 from typing import Dict, List
 
 
@@ -43,7 +44,7 @@ class EmailService:
                 </p>
                 <p>Kind regards,<br/>Fawley Dog Show Team</p>
                 <br>
-                <img src="../images/dog_thank_you.png" alt="Thank you dog" style="display: block; margin: 30px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
+                <img src="cid:dog_thank_you" alt="Thank you dog" style="display: block; margin: 30px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
               </body>
             </html>
             """
@@ -59,6 +60,14 @@ class EmailService:
         msg["Subject"] = subject
 
         msg.attach(MIMEText(body, "html"))
+
+        # Attach the dog thank you image
+        image_path = os.path.join(os.path.dirname(__file__), '../images/dog_thank_you.png')
+        with open(image_path, 'rb') as img_file:
+            img = MIMEImage(img_file.read())
+            img.add_header('Content-ID', '<dog_thank_you>')
+            img.add_header('Content-Disposition', 'inline', filename='dog_thank_you.png')
+            msg.attach(img)
 
         # Connect and send
         try:
