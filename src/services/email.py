@@ -42,6 +42,8 @@ class EmailService:
                   <a href="mailto:fawleydogshow@gmail.com">fawleydogshow@gmail.com</a>.
                 </p>
                 <p>Kind regards,<br/>Fawley Dog Show Team</p>
+                <br>
+                <img src="cid:dog_thank_you" alt="Thank you dog" style="display: block; margin: 30px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
               </body>
             </html>
             """
