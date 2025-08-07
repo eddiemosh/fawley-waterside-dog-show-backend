@@ -62,7 +62,7 @@ def successful_order(order_id: dict) -> int:
             raise Exception("Order ID not provided in request body")
         update_result = order_service.update_order_status(order_id=order_id_value, status=True)
         if not update_result:
-            raise Exception(f"Error updating order {update_result}")
+            print("Order was found but not updated as status already True")
         print(f"Successfully updated order {order_id}")
 
         order = order_service.get_order(order_id=order_id_value)
