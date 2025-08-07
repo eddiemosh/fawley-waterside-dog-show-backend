@@ -12,33 +12,36 @@ class EmailService:
         Send an email to customers
         :return: True if email is successful
         """
-        # Format ticket details
         if tickets:
-            ticket_lines = "\n".join(
-                f"- {' '.join(ticket_name.split('_')).title()} x {quantity}"
+            ticket_lines = "".join(
+                f"<li>{' '.join(ticket_name.split('_')).title()} x {quantity}</li>"
                 for ticket_dict in tickets
                 for ticket_name, quantity in ticket_dict.items()
+                if quantity
             )
         else:
-            ticket_lines = "No tickets purchased."
+            ticket_lines = "<li>No tickets purchased.</li>"
 
-        # Email content
+        # Email content as HTML with inline styles
         body = f"""
-        Hello {name},
-    
-        Thank you for your order!
-    
-        Order ID: {order_id}
-        
-        Tickets purchased:
-        {ticket_lines}
-    
-        This is your confirmation email. Please keep this for your records. 
-        If you run into any trouble, speak to organisers or send an email with your order id to fawleydogshow@gmail.com.
-    
-        Kind regards,  
-        Fawley Dog Show Team
-        """
+            <html>
+              <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <p>Hello {name},</p>
+                <p>Thank you for your order!</p>
+                <p><strong>Order ID:</strong> {order_id}</p>
+                <p><strong>Tickets purchased:</strong></p>
+                <ul style="list-style-position: inside; padding-left: 0; margin-left: 0; color: #555;">
+                  {ticket_lines}
+                </ul>
+                <p>
+                  This is your confirmation email. Please keep this for your records.<br/>
+                  If you run into any trouble, speak to organisers or send an email with your order id to 
+                  <a href="mailto:fawleydogshow@gmail.com">fawleydogshow@gmail.com</a>.
+                </p>
+                <p>Kind regards,<br/>Fawley Dog Show Team</p>
+              </body>
+            </html>
+            """
 
         # Email setup
         from_email = "fawleydogshow@gmail.com"
@@ -50,7 +53,7 @@ class EmailService:
         msg["To"] = to_email
         msg["Subject"] = subject
 
-        msg.attach(MIMEText(body, "plain"))
+        msg.attach(MIMEText(body, "html"))
 
         # Connect and send
         try:
