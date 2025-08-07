@@ -50,13 +50,17 @@ def submit_payment(
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")
 
-        checkout_session = stripe.checkout.Session.create(
-            line_items=line_items,
-            mode="payment",
-            success_url=YOUR_DOMAIN + f"/success-order?orderId={order.order_id}",
-            cancel_url=YOUR_DOMAIN + f"/failure-order?orderId={order.order_id}",
-            automatic_tax={"enabled": True},
-        )
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                line_items=line_items,
+                mode="payment",
+                success_url=YOUR_DOMAIN + f"/success-order?orderId={order.order_id}",
+                cancel_url=YOUR_DOMAIN + f"/failure-order?orderId={order.order_id}",
+                automatic_tax={"enabled": True},
+            )
+        except Exception as ex:
+            print(f"Stripe checkout session creation failed due to {str(ex)} with line items {line_items} and order {order.model_dump()}")
+            raise ex
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
