@@ -33,12 +33,12 @@ class Database:
         self._initialized = True
 
         orders = self.get_orders()
-        count=0
+        count = 0
         for order in orders:
             order = Order(**order)
             if order.first_name == "Edward" and order.date_of_purchase is None and len(order.order_id) > 10:
                 self.delete_order(order_id=order.order_id)
-                count+=1
+                count += 1
         print(f"Deleted {count} orders")
 
     def get_order(self, order_id: str) -> dict:
@@ -55,9 +55,7 @@ class Database:
         :param ticket: the name of the ticket to filter by
         :return: all orders with that ticket present
         """
-        pedigree_results = list(
-            self.orders_collection.find({f"pedigree_tickets.{ticket}": {"$gt": 0}}, {"id": 0})
-        )
+        pedigree_results = list(self.orders_collection.find({f"pedigree_tickets.{ticket}": {"$gt": 0}}, {"id": 0}))
         all_dog_results = list(self.orders_collection.find({f"all_dog_tickets.{ticket}": {"$gt": 0}}, {"id": 0}))
         return pedigree_results + all_dog_results
 
@@ -74,7 +72,9 @@ class Database:
         return False
 
     def update_order(self, order_id: str, status: bool, date_of_purchase: datetime):
-        result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"order_status": status, "date_of_purchase": date_of_purchase}})
+        result = self.orders_collection.update_one(
+            {"order_id": order_id}, {"$set": {"order_status": status, "date_of_purchase": date_of_purchase}}
+        )
         if result.modified_count:
             return result
         if not result.matched_count:

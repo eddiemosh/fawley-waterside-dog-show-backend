@@ -62,7 +62,9 @@ def successful_order(order_id: dict) -> int:
         if not order_id_value:
             raise Exception("Order ID not provided in request body")
         date_of_purchase = datetime.now(tz=timezone.utc)
-        update_result = order_service.update_order_status(order_id=order_id_value, status=True, date_of_purchase=date_of_purchase)
+        update_result = order_service.update_order_status(
+            order_id=order_id_value, status=True, date_of_purchase=date_of_purchase
+        )
         if not update_result:
             print("Order was found but not updated as status already True")
         print(f"Successfully updated order {order_id}")
@@ -76,7 +78,7 @@ def successful_order(order_id: dict) -> int:
             if quantity:
                 purchased_tickets.append({ticket_name: quantity})
 
-        if order.email_address: # Only send email if email address is provided
+        if order.email_address:  # Only send email if email address is provided
             print(f"Sending confirmation email to {order.email_address} for order {order.order_id}")
             email_result = EmailService.send_confirmation_email(
                 to_email=order.email_address,

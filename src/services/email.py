@@ -61,11 +61,11 @@ class EmailService:
         msg.attach(MIMEText(body, "html"))
 
         # Attach the dog thank you image
-        image_path = os.path.join(os.path.dirname(__file__), '../images/dog_thank_you.png')
-        with open(image_path, 'rb') as img_file:
+        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        with open(image_path, "rb") as img_file:
             img = MIMEImage(img_file.read())
-            img.add_header('Content-ID', '<dog_thank_you>')
-            img.add_header('Content-Disposition', 'inline', filename='Thank You!.png')
+            img.add_header("Content-ID", "<dog_thank_you>")
+            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
             msg.attach(img)
 
         # Connect and send
