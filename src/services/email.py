@@ -34,14 +34,14 @@ class EmailService:
         {ticket_lines}
     
         This is your confirmation email. Please keep this for your records. 
-        If you run into any trouble, speak to organisers or send an email with your order id to hardyedward18@gmail.com.
+        If you run into any trouble, speak to organisers or send an email with your order id to fawleydogshow@gmail.com.
     
         Kind regards,  
         Fawley Dog Show Team
         """
 
         # Email setup
-        from_email = "hardyedward18@gmail.com"
+        from_email = "fawleydogshow@gmail.com"
         from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")  # Use an App Password for Gmail
         if not from_password:
             raise ValueError(f"No email password")
