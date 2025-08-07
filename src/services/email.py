@@ -43,7 +43,7 @@ class EmailService:
                 </p>
                 <p>Kind regards,<br/>Fawley Dog Show Team</p>
                 <br>
-                <img src="images/dog_thank_you.png" alt="Thank you dog" style="display: block; margin: 30px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
+                <img src="../images/dog_thank_you.png" alt="Thank you dog" style="display: block; margin: 30px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
               </body>
             </html>
             """
