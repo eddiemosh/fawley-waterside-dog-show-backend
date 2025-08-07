@@ -35,6 +35,7 @@ class Database:
         orders = self.get_orders()
         count=0
         for order in orders:
+            order = Order(**order)
             if order.first_name == "Edward" and order.date_of_purchase is None and len(order.order_id) > 10:
                 self.delete_order(order_id=order.order_id)
                 count+=1
