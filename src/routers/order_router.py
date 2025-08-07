@@ -33,11 +33,11 @@ def get_order(order_id: Optional[str] = None):
 def create_order(
     first_name: str,
     last_name: str,
-    email_address: str,
     doggie_info: dict,
     pedigree_tickets: dict,
     all_dog_tickets: dict,
     order_status: bool = False,
+    email_address: str = "",
 ):
     try:
         result = order_service.create_order(

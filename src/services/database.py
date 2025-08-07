@@ -27,7 +27,7 @@ class Database:
         mongo_client = MongoClient(connection_string)
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
-        self.orders_collection.create_index("order_id")
+        self.orders_collection.create_index("order_id", unique=True)
         self._initialized = True
 
     def get_order(self, order_id: str) -> dict:

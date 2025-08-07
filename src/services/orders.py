@@ -1,4 +1,6 @@
 import json
+import random
+import string
 import uuid
 
 from pymongo.results import UpdateResult
@@ -30,7 +32,7 @@ class OrderService:
         :return: the order id
         """
         try:
-            order_id = str(uuid.uuid4())
+            order_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             list_of_dogs = []
             for key, info in doggie_info.items():
                 list_of_dogs.append(DoggieInfo(**info))

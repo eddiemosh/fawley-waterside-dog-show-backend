@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 import stripe
 from fastapi import APIRouter, HTTPException
@@ -16,6 +17,7 @@ order_service = OrderService()
 secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
 if not secret_key:
     raise ValueError(f"Stripe key not loaded!")
+
 stripe.api_version = "2025-03-31.basil"
 stripe.api_key = secret_key
 
@@ -24,12 +26,11 @@ stripe.api_key = secret_key
 def submit_payment(
     first_name: str,
     last_name: str,
-    email_address: str,
     doggie_info: dict,
     pedigree_tickets: dict,
     all_dog_tickets: dict,
+    email_address: str = "",
 ):
-
     try:
         print(f"Creating order with name: {first_name}, {last_name}")
         order = order_service.create_order(
