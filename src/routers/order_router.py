@@ -84,6 +84,7 @@ def successful_order(order_id: dict) -> int:
                 name=order.first_name,
                 order_id=order.order_id,
                 tickets=purchased_tickets,
+                date_of_purchase=order.date_of_purchase.strftime("%Y-%m-%d %H:%M:%S"),
             )
             if not email_result:
                 raise Exception(f"Failed to send email")
