@@ -2,6 +2,7 @@ import json
 import random
 import string
 import uuid
+from datetime import datetime
 
 from pymongo.results import UpdateResult
 
@@ -55,9 +56,10 @@ class OrderService:
             print(f"Exception {ex} when attempting to create order")
             raise ex
 
-    def update_order_status(self, order_id: str, status: bool) -> UpdateResult:
-        result = self.database_service.update_order(order_id=order_id, status=status)
+    def update_order_status(self, order_id: str, status: bool, date_of_purchase: datetime) -> UpdateResult:
+        result = self.database_service.update_order(order_id=order_id, status=status, date_of_purchase=date_of_purchase)
         return result
+
 
     def get_order(self, order_id: str):
         result = self.database_service.get_order(order_id=order_id)

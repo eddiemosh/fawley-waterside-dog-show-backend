@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from http import HTTPStatus
 from typing import Optional
 
@@ -60,7 +61,8 @@ def successful_order(order_id: dict) -> int:
         order_id_value = order_id.get("order_id")
         if not order_id_value:
             raise Exception("Order ID not provided in request body")
-        update_result = order_service.update_order_status(order_id=order_id_value, status=True)
+        date_of_purchase = datetime.now(tz=timezone.utc)
+        update_result = order_service.update_order_status(order_id=order_id_value, status=True, date_of_purchase=date_of_purchase)
         if not update_result:
             print("Order was found but not updated as status already True")
         print(f"Successfully updated order {order_id}")
@@ -74,15 +76,17 @@ def successful_order(order_id: dict) -> int:
             if quantity:
                 purchased_tickets.append({ticket_name: quantity})
 
-        email_result = EmailService.send_confirmation_email(
-            to_email=order.email_address,
-            subject="Order Confirmation",
-            name=order.first_name,
-            order_id=order.order_id,
-            tickets=purchased_tickets,
-        )
-        if not email_result:
-            raise Exception(f"Failed to send email")
+        if order.email_address: # Only send email if email address is provided
+            print(f"Sending confirmation email to {order.email_address} for order {order.order_id}")
+            email_result = EmailService.send_confirmation_email(
+                to_email=order.email_address,
+                subject="Order Confirmation",
+                name=order.first_name,
+                order_id=order.order_id,
+                tickets=purchased_tickets,
+            )
+            if not email_result:
+                raise Exception(f"Failed to send email")
 
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:

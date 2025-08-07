@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 from urllib.parse import quote_plus
 
 from pymongo import MongoClient
@@ -48,9 +49,7 @@ class Database:
         pedigree_results = list(
             self.orders_collection.find({f"pedigree_tickets.{ticket}": {"$exists": True}}, {"id": 0})
         )
-        all_dog_results = list(
-            self.orders_collection.find({f"all_dog_tickets.{ticket}": {"$exists": True}}, {"id": 0})
-        )
+        all_dog_results = list(self.orders_collection.find({f"all_dog_tickets.{ticket}": {"$exists": True}}, {"id": 0}))
         return pedigree_results + all_dog_results
 
     def create_order(self, order: Order) -> bool:
@@ -65,8 +64,8 @@ class Database:
             return True
         return False
 
-    def update_order(self, order_id: str, status: bool):
-        result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"order_status": status}})
+    def update_order(self, order_id: str, status: bool, date_of_purchase: datetime):
+        result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"order_status": status, "date_of_purchase": date_of_purchase}})
         if result.modified_count:
             return result
         if not result.matched_count:

@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -15,6 +16,7 @@ class Order(BaseModel):
     order_id: str
     first_name: str
     last_name: str
+    date_of_purchase: Optional[datetime] = None
     email_address: Optional[str] = None
     doggie_info: list[DoggieInfo]
     pedigree_tickets: Optional[PedigreeTickets] = None
