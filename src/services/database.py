@@ -47,9 +47,9 @@ class Database:
         :return: all orders with that ticket present
         """
         pedigree_results = list(
-            self.orders_collection.find({f"pedigree_tickets.{ticket}": {"$exists": True}}, {"id": 0})
+            self.orders_collection.find({f"pedigree_tickets.{ticket}": {"$gt": 0}}, {"id": 0})
         )
-        all_dog_results = list(self.orders_collection.find({f"all_dog_tickets.{ticket}": {"$exists": True}}, {"id": 0}))
+        all_dog_results = list(self.orders_collection.find({f"all_dog_tickets.{ticket}": {"$gt": 0}}, {"id": 0}))
         return pedigree_results + all_dog_results
 
     def create_order(self, order: Order) -> bool:
