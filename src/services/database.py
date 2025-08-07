@@ -11,6 +11,7 @@ class Database:
     """
     Database manager (Singleton)
     """
+
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -19,7 +20,7 @@ class Database:
         return cls._instance
 
     def __init__(self):
-        if hasattr(self, '_initialized') and self._initialized:
+        if hasattr(self, "_initialized") and self._initialized:
             return
         db_credentials = json.loads(os.environ.get("DB_CREDENTIALS"))
         db_password = db_credentials.get("password")

@@ -7,7 +7,9 @@ from typing import Dict, List
 
 class EmailService:
     @staticmethod
-    def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str, tickets: List[Dict[str, int]]) -> bool:
+    def send_confirmation_email(
+        to_email: str, subject: str, name: str, order_id: str, tickets: List[Dict[str, int]]
+    ) -> bool:
         """
         Send an email to customers
         :return: True if email is successful

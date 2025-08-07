@@ -75,7 +75,11 @@ def successful_order(order_id: dict) -> int:
                 purchased_tickets.append({ticket_name: quantity})
 
         email_result = EmailService.send_confirmation_email(
-            to_email=order.email_address, subject="Order Confirmation", name=order.first_name, order_id=order.order_id, tickets=purchased_tickets
+            to_email=order.email_address,
+            subject="Order Confirmation",
+            name=order.first_name,
+            order_id=order.order_id,
+            tickets=purchased_tickets,
         )
         if not email_result:
             raise Exception(f"Failed to send email")
