@@ -1,15 +1,7 @@
-import os
-
-import stripe
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from src.routers import payment_router, order_router
-
-secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
-
-stripe.api_version = "2025-03-31.basil"
-stripe.api_key = secret_key
 
 app = FastAPI(title="Dog Show Backend")
 app.include_router(payment_router.router)

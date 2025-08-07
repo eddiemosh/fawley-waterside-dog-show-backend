@@ -1,6 +1,6 @@
 import stripe
 from fastapi import APIRouter, HTTPException
-
+import os
 from src.constants.stripe_price_ids import test_pedigree_price_ids, test_all_dog_price_ids
 from src.services.orders import OrderService
 from src.utils.stripe_utils import generate_line_items
@@ -11,7 +11,10 @@ YOUR_DOMAIN = "https://fawleydogshow.com"
 
 order_service = OrderService()
 
+secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
 
+stripe.api_version = "2025-03-31.basil"
+stripe.api_key = secret_key
 @router.post("/create-payment-intent", tags=["Payments"])
 def submit_payment(
     first_name: str,
