@@ -55,9 +55,12 @@ def create_order(
 
 
 @router.put("/success", status_code=HTTPStatus.ACCEPTED)
-def successful_order(order_id: str) -> int:
+def successful_order(order_id: dict) -> int:
     try:
-        order = order_service.update_order_status(order_id=order_id, status=True)
+        order_id_value = order_id.get("order_id")
+        if not order_id_value:
+            raise Exception("Order ID not provided in request body")
+        order = order_service.update_order_status(order_id=order_id_value, status=True)
         if not order:
             raise Exception("Error updating order")
         print(f"Successfully updated order {order_id}")
