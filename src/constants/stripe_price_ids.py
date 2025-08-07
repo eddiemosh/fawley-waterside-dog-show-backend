@@ -1,5 +1,37 @@
+test_pedigree_price_ids = {
+    "any_puppy": "price_1RtUciCYSxVmD9YE995su8aQ",
+    "any_junior": "price_1RtVQxCYSxVmD9YEI97qj4qI",
+    "any_gundog": "price_1RtVSBCYSxVmD9YEqFHhw5VU",
+    "any_utility": "price_1RtVSnCYSxVmD9YEFsPlQeVK",
+    "any_hound": "price_1RtVTHCYSxVmD9YETLfsIr4Y",
+    "any_toy": "price_1RtVTXCYSxVmD9YEybMk9Rcd",
+    "any_working": "price_1RtVTnCYSxVmD9YEerKUOwIq",
+    "any_pastoral": "price_1RtVU2CYSxVmD9YEA42sSHWg",
+    "any_terrier": "price_1RtVUDCYSxVmD9YEqs1GeKA5",
+    "any_open": "price_1RtVUOCYSxVmD9YEh9zsgdy2",
+    "any_veteran": "price_1RtVUgCYSxVmD9YEK2jqTc7s",
+    "junior_handler": "price_1RtVUvCYSxVmD9YEviZ4B0Fd",
+}
+
+test_all_dog_price_ids = {
+    "puppy": "price_1RtVV6CYSxVmD9YExqp1MW67",
+    "prettiest": "price_1RtVVHCYSxVmD9YENA2Z63rt",
+    "best_condition": "price_1RtVVUCYSxVmD9YEVs9i4s8U",
+    "best_rescue": "price_1RtVVoCYSxVmD9YEcrYFXV0p",
+    "waggiest_tale": "price_1RtVWBCYSxVmD9YEUFQA2eoV",
+    "childs_best_friend": "price_1RtVWWCYSxVmD9YETdikuajE",
+    "fancy_dress": "price_1RtVWyCYSxVmD9YENinX02B4",
+    "handsome": "price_1RtVXxCYSxVmD9YE49X76SQL",
+    "fluffiest": "price_1RtVYACYSxVmD9YEaPxTIhlK",
+    "scruffiest": "price_1RtVYNCYSxVmD9YEeHvIgW8C",
+    "smooth": "price_1RtVYaCYSxVmD9YERdV50ltz",
+    "looks_like_owner": "price_1RtVYmCYSxVmD9YELQ5TfMz0",
+    "obedience": "price_1RtVZ1CYSxVmD9YEBdfIrXsW",
+    "golden_oldie": "price_1RtVZCCYSxVmD9YEz5kWymxJ",
+}
+
 pedigree_price_ids = {
-    "any_puppy": "price_XXX1",
+    "any_puppy": "",
     "any_junior": "price_XXX2",
     "any_gundog": "price_XXX3",
     "any_utility": "price_XXX4",
@@ -14,38 +46,6 @@ pedigree_price_ids = {
 }
 
 all_dog_price_ids = {
-    "puppy": "price_FUN1",
-    "prettiest": "price_FUN2",
-    "best_condition": "price_FUN3",
-    "best_rescue": "price_FUN4",
-    "waggiest_tale": "price_FUN5",
-    "childs_best_friend": "price_FUN6",
-    "fancy_dress": "price_FUN7",
-    "handsome": "price_FUN8",
-    "fluffiest": "price_FUN9",
-    "scruffiest": "price_FUN10",
-    "smooth": "price_FUN11",
-    "looks_like_owner": "price_FUN12",
-    "obedience": "price_FUN13",
-    "golden_oldie": "price_FUN14",
-}
-
-test_pedigree_price_ids = {
-    "any_puppy": "price_1RtUciCYSxVmD9YE995su8aQ",
-    "any_junior": "price_XXX2",
-    "any_gundog": "price_XXX3",
-    "any_utility": "price_XXX4",
-    "any_hound": "price_XXX5",
-    "any_toy": "price_XXX6",
-    "any_working": "price_XXX7",
-    "any_pastoral": "price_XXX8",
-    "any_terrier": "price_XXX9",
-    "any_open": "price_XXX10",
-    "any_veteran": "price_XXX11",
-    "junior_handler": "price_XXX12",
-}
-
-test_all_dog_price_ids = {
     "puppy": "price_FUN1",
     "prettiest": "price_FUN2",
     "best_condition": "price_FUN3",
