@@ -54,8 +54,8 @@ def submit_payment(
             checkout_session = stripe.checkout.Session.create(
                 line_items=line_items,
                 mode="payment",
-                success_url=YOUR_DOMAIN + f"/success-order?orderId={order.order_id}",
-                cancel_url=YOUR_DOMAIN + f"/failure-order?orderId={order.order_id}",
+                success_url=YOUR_DOMAIN + f"/order-success?orderId={order.order_id}",
+                cancel_url=YOUR_DOMAIN + f"/order-failure?orderId={order.order_id}",
                 automatic_tax={"enabled": True},
             )
         except Exception as ex:
