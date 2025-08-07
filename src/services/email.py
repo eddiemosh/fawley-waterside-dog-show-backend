@@ -15,7 +15,7 @@ class EmailService:
         # Format ticket details
         if tickets:
             ticket_lines = "\n".join(
-                f"- {' '.join(ticket_name.split('_')).title()}: {quantity}"
+                f"- {' '.join(ticket_name.split('_')).title()} x {quantity}"
                 for ticket_dict in tickets
                 for ticket_name, quantity in ticket_dict.items()
             )
