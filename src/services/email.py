@@ -2,15 +2,26 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from typing import Dict, List
 
 
 class EmailService:
     @staticmethod
-    def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str, tickets: list[str]) -> bool:
+    def send_confirmation_email(to_email: str, subject: str, name: str, order_id: str, tickets: List[Dict[str, int]]) -> bool:
         """
         Send an email to customers
         :return: True if email is successful
         """
+        # Format ticket details
+        if tickets:
+            ticket_lines = "\n".join(
+                f"- {ticket_name}: {quantity}"
+                for ticket_dict in tickets
+                for ticket_name, quantity in ticket_dict.items()
+            )
+        else:
+            ticket_lines = "No tickets purchased."
+
         # Email content
         body = f"""
         Hello {name},
@@ -20,7 +31,7 @@ class EmailService:
         Order ID: {order_id}
         
         Tickets purchased:
-        {', '.join(tickets) if tickets else 'No tickets purchased.'}
+        {ticket_lines}
     
         This is your confirmation email. Please keep this for your records. 
         If you run into any trouble, speak to organisers or send an email with your order id to hardyedward18@gmail.com.

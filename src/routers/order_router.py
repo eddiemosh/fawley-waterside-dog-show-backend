@@ -69,10 +69,10 @@ def successful_order(order_id: dict) -> int:
         purchased_tickets = []
         pedigree_tickets = order.pedigree_tickets.model_dump() if order.pedigree_tickets else {}
         all_dog_tickets = order.all_dog_tickets.model_dump() if order.all_dog_tickets else {}
-        combined_tickets = {**pedigree_tickets, ** all_dog_tickets}
+        combined_tickets = {**pedigree_tickets, **all_dog_tickets}
         for ticket_name, quantity in combined_tickets.items():
             if quantity:
-                purchased_tickets.append(ticket_name)
+                purchased_tickets.append({ticket_name: quantity})
 
         email_result = EmailService.send_confirmation_email(
             to_email=order.email_address, subject="Order Confirmation", name=order.first_name, order_id=order.order_id, tickets=purchased_tickets
