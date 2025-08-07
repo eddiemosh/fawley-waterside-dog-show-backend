@@ -65,7 +65,7 @@ class EmailService:
         with open(image_path, 'rb') as img_file:
             img = MIMEImage(img_file.read())
             img.add_header('Content-ID', '<dog_thank_you>')
-            img.add_header('Content-Disposition', 'inline', filename='dog_thank_you.png')
+            img.add_header('Content-Disposition', 'inline', filename='Thank You!.png')
             msg.attach(img)
 
         # Connect and send
