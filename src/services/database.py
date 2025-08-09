@@ -36,14 +36,16 @@ class Database:
         count = 0
         orders = self.get_orders()
         for order in orders:
-            if (
-                order.get("first_name") == "Edward"
-                or order.get("first_name") == "Ian"
-            ) and order.get("last_name") == "Hardy":
+            if (order.get("first_name") == "Edward" or order.get("first_name") == "Ian") and order.get(
+                "last_name"
+            ) == "Hardy":
                 self.delete_order(order_id=order.get("order_id"))
                 count += 1
 
-            if order.get("email_address") == "ian.hardy2106@icloud.com" or order.get("email_address") == "bloogy.doggy@iknow.com":
+            if (
+                order.get("email_address") == "ian.hardy2106@icloud.com"
+                or order.get("email_address") == "bloogy.doggy@iknow.com"
+            ):
                 self.delete_order(order_id=order.get("order_id"))
                 count += 1
 
