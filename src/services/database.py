@@ -29,8 +29,9 @@ class Database:
         mongo_client = MongoClient(connection_string)
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
+        self.test_collection = db["test"]
         self.orders_collection.create_index("order_id", unique=True)
-        self.orders_collection.create_index("test_mode", unique=True)
+        self.test_collection.create_index("test_mode", unique=True)
         self._initialized = True
 
     def get_order(self, order_id: str) -> dict:
@@ -86,8 +87,14 @@ class Database:
         Get the current test mode status
         :return: True if test mode is enabled, False otherwise
         """
-        result = self.orders_collection.find_one({"test_mode": True})
-        return bool(result)
+        results = list(self.test_collection.find({}, {"id": 0}))
+        if not results:
+            self.test_collection.insert_one({"test_mode": False})
+            print("No test mode document found, created with default False")
+        if len(results) > 1:
+            raise Exception("Multiple test mode documents found, expected only one")
+        test_mode = results[0].get("test_mode", False) if results else False
+        return test_mode
 
     def update_test_mode(self, test_mode: bool) -> bool:
         """
@@ -95,15 +102,16 @@ class Database:
         :param test_mode: True to enable test mode, False to disable
         :return: True if the update was successful, False otherwise
         """
-        result = self.orders_collection.update_one({"test_mode": {"$exists": True}}, {"$set": {"test_mode": test_mode}})
+        test_id = self.test_collection.find({}, {"_id": 1}).limit(1)
+        result = self.test_collection.update_one({"_id": test_id}, {"$set": {"test_mode": test_mode}})
         if not result.matched_count:
             # If no document exists, create one with the test_mode field
             result = self.orders_collection.insert_one({"test_mode": test_mode})
             if result.inserted_id:
                 print(f"Test mode set to {test_mode} and new document created")
-                return True
+                return test_mode
         if result.modified_count:
             print(f"Test mode updated to {test_mode}")
-            return True
+            return test_mode
         print("Failed to update test mode")
         return False
