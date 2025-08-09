@@ -1,10 +1,9 @@
 import os
-from typing import Optional
 
 import stripe
 from fastapi import APIRouter, HTTPException
 
-from src.constants.stripe_price_ids import test_all_dog_price_ids, test_pedigree_price_ids
+from src.constants.stripe_price_ids import all_dog_price_ids, pedigree_price_ids
 from src.services.orders import OrderService
 from src.utils.stripe_utils import generate_line_items
 
@@ -14,7 +13,7 @@ YOUR_DOMAIN = "https://fawleydogshow.com"
 
 order_service = OrderService()
 
-secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
+secret_key = os.getenv("STRIPE_SECRET_KEY")
 if not secret_key:
     raise ValueError(f"Stripe key not loaded!")
 
@@ -43,10 +42,8 @@ def submit_payment(
         )
         print(f"Created order with result {order}")
         line_items = []
-        # line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=pedigree_price_ids)
-        # line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=all_dog_price_ids)
-        line_items += generate_line_items(ticket_data=order.pedigree_tickets, price_ids=test_pedigree_price_ids)
-        line_items += generate_line_items(ticket_data=order.all_dog_tickets, price_ids=test_all_dog_price_ids)
+        line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=pedigree_price_ids)
+        line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=all_dog_price_ids)
         print("line items:", line_items)
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")
