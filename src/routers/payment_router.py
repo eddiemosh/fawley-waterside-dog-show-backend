@@ -42,8 +42,8 @@ def submit_payment(
         )
         print(f"Created order with result {order}")
         line_items = []
-        line_items += generate_line_items(ticket_data=pedigree_tickets, price_ids=pedigree_price_ids)
-        line_items += generate_line_items(ticket_data=all_dog_tickets, price_ids=all_dog_price_ids)
+        line_items += generate_line_items(ticket_data=order.pedigree_tickets, price_ids=pedigree_price_ids)
+        line_items += generate_line_items(ticket_data=order.all_dog_tickets, price_ids=all_dog_price_ids)
         print("line items:", line_items)
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")
