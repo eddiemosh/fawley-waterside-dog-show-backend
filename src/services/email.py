@@ -33,7 +33,7 @@ class EmailService:
                 <p>Thank you for your order!</p>
                 <p><strong>Order ID:</strong> {order_id}</p>
                 <p><strong>Date of Purchase:</strong> {date_of_purchase}</p>
-                <p><strong>Amount:</strong> {amount}</p>
+                <p><strong>Amount:</strong> £{amount}</p>
                 <p><strong>Tickets purchased:</strong></p>
                 <ul style="list-style-position: inside; padding-left: 0; margin-left: 0; color: #555;">
                   {ticket_lines}
