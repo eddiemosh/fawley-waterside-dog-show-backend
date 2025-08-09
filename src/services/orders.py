@@ -74,6 +74,14 @@ class OrderService:
         orders = [Order(**result) for result in results]
         return orders
 
+    def get_test_mode(self):
+        result = self.database_service.get_test_mode()
+        return result
+
+    def update_test_mode(self, test_mode: bool):
+        result = self.database_service.update_test_mode(test_mode=test_mode)
+        return result
+
     def delete_order(self, order_id: str):
         result = self.database_service.delete_order(order_id=order_id)
         return result

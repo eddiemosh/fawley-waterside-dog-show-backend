@@ -30,6 +30,7 @@ class Database:
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
         self.orders_collection.create_index("order_id", unique=True)
+        self.orders_collection.create_index("test_mode", unique=True)
         self._initialized = True
 
     def get_order(self, order_id: str) -> dict:
@@ -78,4 +79,31 @@ class Database:
             print(f"Order {order_id} deleted successfully")
             return True
         print(f"Order {order_id} not found or already deleted")
+        return False
+
+    def get_test_mode(self) -> bool:
+        """
+        Get the current test mode status
+        :return: True if test mode is enabled, False otherwise
+        """
+        result = self.orders_collection.find_one({"test_mode": True})
+        return bool(result)
+
+    def update_test_mode(self, test_mode: bool) -> bool:
+        """
+        Update the test mode status
+        :param test_mode: True to enable test mode, False to disable
+        :return: True if the update was successful, False otherwise
+        """
+        result = self.orders_collection.update_one({"test_mode": {"$exists": True}}, {"$set": {"test_mode": test_mode}})
+        if not result.matched_count:
+            # If no document exists, create one with the test_mode field
+            result = self.orders_collection.insert_one({"test_mode": test_mode})
+            if result.inserted_id:
+                print(f"Test mode set to {test_mode} and new document created")
+                return True
+        if result.modified_count:
+            print(f"Test mode updated to {test_mode}")
+            return True
+        print("Failed to update test mode")
         return False

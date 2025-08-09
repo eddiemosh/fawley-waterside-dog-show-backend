@@ -1,0 +1,20 @@
+from http import HTTPStatus
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException
+
+from src.routers.payment_router import order_service
+from src.services.email import EmailService
+from src.services.orders import OrderService
+
+router = APIRouter(prefix="/test", tags=["Test"])
+
+
+@router.put("/", status_code=HTTPStatus.OK)
+def toggle_test_mode(test_mode: bool):
+    try:
+        order_service = OrderService()
+        test_mode = order_service.update_test_mode(test_mode=test_mode)
+        return {"message": f"Test mode set to {test_mode}"}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))
