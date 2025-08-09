@@ -101,7 +101,7 @@ class Database:
         :param test_mode: True to enable test mode, False to disable
         :return: True if the update was successful, False otherwise
         """
-        test_id = self.test_collection.find({}, {"_id": 1}).limit(1)
+        test_id = list(self.test_collection.find({}, {"_id": 1}).limit(1))[0].get("_id")
         result = self.test_collection.update_one({"_id": test_id}, {"$set": {"test_mode": test_mode}})
         if not result.matched_count:
             # If no document exists, create one with the test_mode field
