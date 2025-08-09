@@ -19,6 +19,7 @@ def toggle_test_mode(test_mode: bool):
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 
+
 @router.get("/", status_code=HTTPStatus.OK)
 def get_test_mode():
     try:
