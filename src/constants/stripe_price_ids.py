@@ -31,8 +31,7 @@ test_all_dog_price_ids = {
 }
 
 pedigree_price_ids = {
-    # "any_puppy": "price_1Ru0CFCxiZ7gi8V55qxclT76",price_1Ru1tZCxiZ7gi8V59rwgDgQv
-    "any_puppy": "price_1Ru1tZCxiZ7gi8V59rwgDgQv",
+    "any_puppy": "price_1Ru0CFCxiZ7gi8V55qxclT76",
     "any_junior": "price_1Ru0CCCxiZ7gi8V5eD2vuipk",
     "any_gundog": "price_1Ru0C7CxiZ7gi8V5E5WmSFtW",
     "any_utility": "price_1Ru0C5CxiZ7gi8V51TuDyVtq",
