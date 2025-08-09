@@ -113,4 +113,4 @@ class Database:
             print(f"Test mode updated to {test_mode}")
             return test_mode
         print("Failed to update test mode")
-        return False
+        return test_mode
