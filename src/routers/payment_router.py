@@ -1,4 +1,5 @@
 import os
+from http import HTTPStatus
 
 import stripe
 from fastapi import APIRouter, HTTPException
@@ -50,15 +51,22 @@ def submit_payment(
             all_dog_tickets=all_dog_tickets,
         )
         print(f"Created order with result {order}")
-        line_items = []
+        amount: str = "TBD"
         if order_service.get_test_mode():
             stripe.api_key = test_secret_key
-            line_items += generate_line_items(ticket_data=order.pedigree_tickets, price_ids=test_pedigree_price_ids)
-            line_items += generate_line_items(ticket_data=order.all_dog_tickets, price_ids=test_all_dog_price_ids)
+            pedigree_line_items = generate_line_items(
+                ticket_data=order.pedigree_tickets, price_ids=test_pedigree_price_ids
+            )
+            all_dog_line_items = generate_line_items(
+                ticket_data=order.all_dog_tickets, price_ids=test_all_dog_price_ids
+            )
         else:
             stripe.api_key = secret_key
-            line_items += generate_line_items(ticket_data=order.pedigree_tickets, price_ids=pedigree_price_ids)
-            line_items += generate_line_items(ticket_data=order.all_dog_tickets, price_ids=all_dog_price_ids)
+            pedigree_line_items = generate_line_items(ticket_data=order.pedigree_tickets, price_ids=pedigree_price_ids)
+            all_dog_line_items = generate_line_items(ticket_data=order.all_dog_tickets, price_ids=all_dog_price_ids)
+        amount = str((5 * len(pedigree_price_ids)) + (4 * len(all_dog_price_ids)))
+        line_items = pedigree_line_items + all_dog_line_items
+        order_service.update_order_amount(order_id=order.order_id, amount=amount)
         print("line items:", line_items)
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")
@@ -83,3 +91,40 @@ def submit_payment(
         "order_id": order.order_id,
         "url": checkout_session.url,
     }
+
+
+@router.post("/cash", status_code=HTTPStatus.CREATED)
+def record_cash_payment(
+    first_name: str,
+    last_name: str,
+    doggie_info: dict,
+    pedigree_tickets: dict,
+    all_dog_tickets: dict,
+    cash_amount: str,
+    email_address: str = "",
+):
+    """
+    Record a cash payment for an order.
+    :param first_name: First name of the customer.
+    :param last_name: Last name of the customer.
+    :param doggie_info: Information about the dogs.
+    :param pedigree_tickets: Pedigree tickets purchased.
+    :param all_dog_tickets: All dog tickets purchased.
+    :param email_address: Email address of the customer.
+    :param cash_amount: Amount of cash paid.
+    :return: A message indicating the order was created successfully.
+    """
+    try:
+        order = order_service.create_order(
+            first_name=first_name,
+            last_name=last_name,
+            email_address=email_address,
+            doggie_info=doggie_info,
+            pedigree_tickets=pedigree_tickets,
+            all_dog_tickets=all_dog_tickets,
+            order_status=True,
+            amount=cash_amount,
+        )
+        return {"message": "Order created successfully with cash payment.", "order_id": order.order_id}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))

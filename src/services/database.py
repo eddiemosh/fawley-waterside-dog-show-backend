@@ -63,7 +63,7 @@ class Database:
             return True
         return False
 
-    def update_order(self, order_id: str, status: bool, date_of_purchase: datetime):
+    def update_order_status(self, order_id: str, status: bool, date_of_purchase: datetime):
         result = self.orders_collection.update_one(
             {"order_id": order_id}, {"$set": {"order_status": status, "date_of_purchase": date_of_purchase}}
         )
@@ -71,6 +71,12 @@ class Database:
             return result
         if not result.matched_count:
             raise Exception("Order not found")
+        return False
+
+    def update_order_amount(self, order_id: str, amount: str):
+        result = self.orders_collection.update_one({"order_id": order_id}, {"$set": {"amount": amount}})
+        if result.modified_count:
+            return True
         return False
 
     def delete_order(self, order_id: str) -> bool:

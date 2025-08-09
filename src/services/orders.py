@@ -27,6 +27,7 @@ class OrderService:
         pedigree_tickets: dict,
         all_dog_tickets: dict,
         order_status: bool = False,
+        amount: str = "TBD",
     ) -> Order:
         """
         Create an order in the database
@@ -47,6 +48,7 @@ class OrderService:
                 pedigree_tickets=PedigreeTickets(**pedigree_tickets),
                 all_dog_tickets=AllDogTickets(**all_dog_tickets),
                 order_status=order_status,
+                amount=amount,
             )
             result = self.database_service.create_order(order=order)
             if not result:
@@ -57,7 +59,9 @@ class OrderService:
             raise ex
 
     def update_order_status(self, order_id: str, status: bool, date_of_purchase: datetime) -> UpdateResult:
-        result = self.database_service.update_order(order_id=order_id, status=status, date_of_purchase=date_of_purchase)
+        result = self.database_service.update_order_status(
+            order_id=order_id, status=status, date_of_purchase=date_of_purchase
+        )
         return result
 
     def get_order(self, order_id: str):
@@ -80,6 +84,10 @@ class OrderService:
 
     def update_test_mode(self, test_mode: bool):
         result = self.database_service.update_test_mode(test_mode=test_mode)
+        return result
+
+    def update_order_amount(self, order_id: str, amount: str):
+        result = self.database_service.update_order_amount(order_id=order_id, amount=amount)
         return result
 
     def delete_order(self, order_id: str):
