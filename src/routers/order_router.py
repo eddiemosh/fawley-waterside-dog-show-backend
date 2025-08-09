@@ -23,8 +23,6 @@ def get_order(order_id: Optional[str] = None):
             raise HTTPException(status_code=404, detail="Order Not Found")
         else:
             orders = order_service.get_orders()
-            if not orders:
-                raise Exception("Failure getting all orders")
             return orders
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
