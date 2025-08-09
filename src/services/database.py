@@ -106,7 +106,7 @@ class Database:
         result = self.test_collection.update_one({"_id": test_id}, {"$set": {"test_mode": test_mode}})
         if not result.matched_count:
             # If no document exists, create one with the test_mode field
-            result = self.orders_collection.insert_one({"test_mode": test_mode})
+            result = self.test_collection.insert_one({"test_mode": test_mode})
             if result.inserted_id:
                 print(f"Test mode set to {test_mode} and new document created")
                 return test_mode
