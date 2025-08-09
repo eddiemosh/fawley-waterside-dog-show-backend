@@ -3,8 +3,12 @@ import os
 import stripe
 from fastapi import APIRouter, HTTPException
 
-from src.constants.stripe_price_ids import all_dog_price_ids, pedigree_price_ids, test_pedigree_price_ids, \
-    test_all_dog_price_ids
+from src.constants.stripe_price_ids import (
+    all_dog_price_ids,
+    pedigree_price_ids,
+    test_all_dog_price_ids,
+    test_pedigree_price_ids,
+)
 from src.services.orders import OrderService
 from src.utils.stripe_utils import generate_line_items
 
