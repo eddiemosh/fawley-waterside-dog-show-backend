@@ -85,10 +85,10 @@ def successful_order(order_id: dict) -> int:
                 order_id=order.order_id,
                 tickets=purchased_tickets,
                 date_of_purchase=order.date_of_purchase.strftime("%Y-%m-%d %H:%M:%S"),
+                amount=order.amount,
             )
             if not email_result:
                 raise Exception(f"Failed to send email")
-
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Error performing successful order workflow due to {str(ex)}")

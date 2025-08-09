@@ -9,7 +9,7 @@ from typing import Dict, List
 class EmailService:
     @staticmethod
     def send_confirmation_email(
-        to_email: str, subject: str, name: str, order_id: str, tickets: List[Dict[str, int]], date_of_purchase: str
+        to_email: str, subject: str, name: str, order_id: str, tickets: List[Dict[str, int]], date_of_purchase: str, amount: str
     ) -> bool:
         """
         Send an email to customers
@@ -33,6 +33,7 @@ class EmailService:
                 <p>Thank you for your order!</p>
                 <p><strong>Order ID:</strong> {order_id}</p>
                 <p><strong>Date of Purchase:</strong> {date_of_purchase}</p>
+                <p><strong>Amount:</strong> {amount}</p>
                 <p><strong>Tickets purchased:</strong></p>
                 <ul style="list-style-position: inside; padding-left: 0; margin-left: 0; color: #555;">
                   {ticket_lines}
