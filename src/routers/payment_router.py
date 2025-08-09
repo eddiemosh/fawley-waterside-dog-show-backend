@@ -64,7 +64,7 @@ def submit_payment(
             stripe.api_key = secret_key
             pedigree_line_items = generate_line_items(ticket_data=order.pedigree_tickets, price_ids=pedigree_price_ids)
             all_dog_line_items = generate_line_items(ticket_data=order.all_dog_tickets, price_ids=all_dog_price_ids)
-        amount = str((5 * len(pedigree_price_ids)) + (4 * len(all_dog_price_ids)))
+        amount = str((5 * len(order.pedigree_tickets.model_dump(exclude_none=True))) + (4 * len(order.all_dog_tickets.model_dump(exclude_none=True))))
         line_items = pedigree_line_items + all_dog_line_items
         order_service.update_order_amount(order_id=order.order_id, amount=amount)
         print("line items:", line_items)
