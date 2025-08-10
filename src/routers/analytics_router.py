@@ -26,3 +26,18 @@ def get_analytics_by_ticket(ticket: str):
         return analytics_data
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
+
+@router.get("/revenue", status_code=HTTPStatus.OK)
+def get_revenue():
+    """
+    Get total revenue from all orders.
+    :return: A dictionary containing the total revenue.
+    """
+    try:
+        orders = order_service.get_orders()
+        total = 0
+        for order in orders:
+            total += float(order.amount)
+        return {"total_revenue": total}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))
