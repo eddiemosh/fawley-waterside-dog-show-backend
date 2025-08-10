@@ -30,14 +30,14 @@ def get_feedback_submissions():
 
 
 @router.post("/submit", status_code=HTTPStatus.OK)
-def submit_feedback(
-        request: Request
-):
+def submit_feedback(request: Request):
     """
     Create feedback submission.
     :return:
     """
     try:
-        feedback_service.submit_feedback(text=request.get("feedback"), email_address=request.get("email_address"), ratings=request.get("ratings"))
+        feedback_service.submit_feedback(
+            text=request.get("feedback"), email_address=request.get("email_address"), ratings=request.get("ratings")
+        )
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))

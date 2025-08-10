@@ -1,10 +1,11 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import quote_plus
 
 from pymongo import MongoClient
 
+from src.data_models.feedback_data_models import FeedbackRatings
 from src.services.orders import Order
 
 
@@ -30,6 +31,7 @@ class Database:
         db = mongo_client["dogshow"]
         self.orders_collection = db["orders"]
         self.test_collection = db["test"]
+        self.feedback_collection = db["feedback"]
         self.orders_collection.create_index("order_id", unique=True)
         self._initialized = True
 
@@ -123,3 +125,28 @@ class Database:
             return test_mode
         print("Failed to update test mode")
         return test_mode
+
+    def create_feedback_submission(self, text: str, ratings: FeedbackRatings, email_address: str):
+        """
+        Submit feedback to the database.
+        :param text: the feedback text
+        :param ratings: the ratings given by the user
+        :param email_address: the email address of the user submitting feedback
+        :return: True if feedback was submitted successfully, False otherwise
+        """
+        feedback_data = {
+            "text": text,
+            "ratings": ratings.model_dump(),
+            "email_address": email_address,
+            "timestamp": datetime.now(tz=timezone.utc),
+        }
+        result = self.feedback_collection.insert_one(feedback_data)
+        return result.inserted_id is not None
+
+    def get_feedback_submissions(self):
+        """
+        Get all feedback submissions from the database.
+        :return: a list of feedback submissions
+        """
+        results = self.feedback_collection.find({}, {"_id": 0})
+        return list(results) if results else []
