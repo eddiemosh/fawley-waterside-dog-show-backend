@@ -27,6 +27,7 @@ def get_analytics_by_ticket(ticket: str):
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 
+
 @router.get("/revenue", status_code=HTTPStatus.OK)
 def get_revenue():
     """
