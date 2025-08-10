@@ -51,7 +51,6 @@ def submit_payment(
             all_dog_tickets=all_dog_tickets,
         )
         print(f"Created order with result {order}")
-        amount: str = "TBD"
         if order_service.get_test_mode():
             stripe.api_key = test_secret_key
             pedigree_line_items = generate_line_items(
@@ -64,9 +63,13 @@ def submit_payment(
             stripe.api_key = secret_key
             pedigree_line_items = generate_line_items(ticket_data=order.pedigree_tickets, price_ids=pedigree_price_ids)
             all_dog_line_items = generate_line_items(ticket_data=order.all_dog_tickets, price_ids=all_dog_price_ids)
-        amount = str((5 * len(order.pedigree_tickets.model_dump(exclude_none=True))) + (4 * len(order.all_dog_tickets.model_dump(exclude_none=True))))
+        amount: float = 0.0
+        for ticket_name, quantity in order.pedigree_tickets.model_dump(exclude_none=True).items():
+            amount += quantity * 5
+        for ticket_name, quantity in order.all_dog_tickets.model_dump(exclude_none=True).items():
+            amount += quantity * 4
         line_items = pedigree_line_items + all_dog_line_items
-        order_service.update_order_amount(order_id=order.order_id, amount=amount)
+        order_service.update_order_amount(order_id=order.order_id, amount=str(amount))
         print("line items:", line_items)
         if not line_items:
             raise HTTPException(status_code=400, detail="No tickets selected.")
