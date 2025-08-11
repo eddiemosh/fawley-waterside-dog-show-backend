@@ -7,6 +7,7 @@ from pymongo.results import UpdateResult
 from src.data_models.order_data_models import DoggieInfo, Order
 from src.data_models.tickets_data_models import AllDogTickets, PedigreeTickets
 from src.services.database import Database
+from src.utils.record_id import generate_id
 
 
 class OrderService:
@@ -32,7 +33,7 @@ class OrderService:
         :return: the order id
         """
         try:
-            order_id = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            order_id = generate_id()
             list_of_dogs = []
             for key, info in doggie_info.items():
                 list_of_dogs.append(DoggieInfo(**info))

@@ -130,16 +130,18 @@ class Database:
         print("Failed to update test mode")
         return test_mode
 
-    def create_feedback_submission(self, text: str, ratings: FeedbackRatings, email_address: str):
+    def create_feedback_submission(self, feedback_id: str, message: str, ratings: FeedbackRatings, email_address: str):
         """
         Submit feedback to the database.
-        :param text: the feedback text
+        :param feedback_id: unique identifier for the feedback submission
+        :param message: the feedback text
         :param ratings: the ratings given by the user
         :param email_address: the email address of the user submitting feedback
         :return: True if feedback was submitted successfully, False otherwise
         """
         feedback_data = {
-            "text": text,
+            "feedback_id": feedback_id,
+            "message": message,
             "ratings": ratings.model_dump(),
             "email_address": email_address,
             "timestamp": datetime.now(tz=timezone.utc),

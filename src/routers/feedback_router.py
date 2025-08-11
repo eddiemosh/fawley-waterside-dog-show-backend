@@ -37,7 +37,7 @@ def submit_feedback(payload: dict):
         raise HTTPException(status_code=400, detail=f"Invalid ratings format: {str(ex)}")
     try:
         feedback_service.submit_feedback(
-            text=payload.get("feedback"), email_address=payload.get("email_address"), ratings=ratings
+            message=payload.get("feedback"), email_address=payload.get("email_address"), ratings=ratings
         )
         return {"status": "success"}
     except Exception as ex:

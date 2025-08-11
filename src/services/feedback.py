@@ -2,6 +2,7 @@ from pydantic import ValidationError
 
 from src.data_models.feedback_data_models import FeedbackRatings, FeedbackSubmission
 from src.services.database import Database
+from src.utils.record_id import generate_id
 
 
 class FeedbackService:
@@ -21,16 +22,18 @@ class FeedbackService:
             raise Exception(f"Failed to fetch feedback submissions: {str(ex)}")
         return submissions
 
-    def submit_feedback(self, text: str, ratings: FeedbackRatings, email_address: str = ""):
+    def submit_feedback(self, message: str, ratings: FeedbackRatings, email_address: str = ""):
         """
         Submit feedback to the database.
-        :param text:
+        :param message:
         :param ratings:
         :param email_address:
         :return:
         """
+        feedback_id = generate_id()
         result = self.database_service.create_feedback_submission(
-            text=text, ratings=ratings, email_address=email_address
+            feedback_id=feedback_id,
+            message=message, ratings=ratings, email_address=email_address
         )
         if not result:
             raise Exception("Failed to submit feedback")
