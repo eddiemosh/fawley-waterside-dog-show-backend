@@ -22,7 +22,6 @@ class FeedbackService:
         :param email_address:
         :return:
         """
-
         result = self.database_service.create_feedback_submission(
             text=text, ratings=ratings, email_address=email_address
         )
