@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -22,6 +23,7 @@ class FeedbackSubmission(BaseModel):
     """
 
     feedback_id: str
-    email: str
+    email_address: str
     message: str
     ratings: FeedbackRatings
+    timestamp: datetime
