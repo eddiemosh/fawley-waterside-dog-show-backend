@@ -10,9 +10,9 @@ class Donation(BaseModel):
     """
 
     donation_id: str
-    email_address: Optional[str] = ""
+    email_address: Optional[str] = None
     amount: float
     timestamp: datetime
-    first_name: str
-    last_name: str
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
     status: bool = False

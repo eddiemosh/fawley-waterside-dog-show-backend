@@ -15,3 +15,9 @@ class DonationsRepository:
 
     def get_all_donations(self) -> list[dict]:
         return list(self.collection.find())
+
+    def get_donation(self, donation_id: str) -> dict:
+        result = self.collection.find_one({"donation_id": donation_id})
+        if not result:
+            raise Exception(f"Donation with ID {donation_id} not found")
+        return result

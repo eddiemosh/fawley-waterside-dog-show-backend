@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Optional
 
 import stripe
 from fastapi import APIRouter, HTTPException
@@ -56,5 +57,18 @@ def record_donation(payload: dict):
                 date_of_donation=donation.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             )
         return {"donation_id": donation.donation_id, "checkout_url": session.url}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))
+
+@router.get("", status_code=HTTPStatus.OK)
+def get_donation(donation_id: Optional[str]):
+    """
+    Get a donation by ID.
+    :param donation_id: The ID of the donation to retrieve. If not provided, returns all donations.
+    :return: The donation details.
+    """
+    try:
+        donations = donation_service.get_donations(donation_id=donation_id)
+        return donations
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))

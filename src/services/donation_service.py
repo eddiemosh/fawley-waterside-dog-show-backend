@@ -19,10 +19,14 @@ class DonationService:
     stripe.api_version = "2025-03-31.basil"
     stripe.api_key = get_stripe_key()
 
-    def get_donations(self) -> list[Donation]:
+    def get_donations(self, donation_id: Optional[str] = None) -> list[Donation]:
         try:
-            results = self.donation_repository.get_all_donations()
-            donations = [Donation(**result) for result in results]
+            if donation_id:
+                result = self.donation_repository.get_donation(donation_id=donation_id)
+                donations = [Donation(**result)]
+            else:
+                results = self.donation_repository.get_all_donations()
+                donations = [Donation(**result) for result in results]
         except ValidationError as ve:
             raise Exception(f"Validation error while processing donations: {str(repr(ve.errors()))}")
         except Exception as ex:
@@ -30,7 +34,7 @@ class DonationService:
         return donations
 
     def create_donation(
-        self, first_name: str, last_name: str, amount: float, email_address: Optional[str] = ""
+        self, first_name: str, last_name: str, amount: float, email_address: Optional[str] = None
     ) -> Donation:
         donation = Donation(
             first_name=first_name,
