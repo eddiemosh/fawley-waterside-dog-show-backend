@@ -37,7 +37,9 @@ def record_donation(payload: dict):
                 {
                     "price_data": {
                         "currency": "gbp",
-                        "product": donation_product_id if not TestRepository().get_test_mode() else test_donation_product_id,
+                        "product": (
+                            donation_product_id if not TestRepository().get_test_mode() else test_donation_product_id
+                        ),
                         "unit_amount": int(donation.amount * 100),
                     },
                     "quantity": 1,
