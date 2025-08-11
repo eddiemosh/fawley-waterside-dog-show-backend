@@ -1,7 +1,5 @@
-import json
 import random
 import string
-import uuid
 from datetime import datetime
 
 from pymongo.results import UpdateResult

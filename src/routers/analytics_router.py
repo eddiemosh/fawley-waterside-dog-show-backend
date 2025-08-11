@@ -1,9 +1,7 @@
 from http import HTTPStatus
-from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
-from src.services.email import EmailService
 from src.services.orders import OrderService
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
