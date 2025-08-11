@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from starlette.requests import Request
 
 from src.services.email import EmailService
@@ -30,14 +30,17 @@ def get_feedback_submissions():
 
 
 @router.post("/submit", status_code=HTTPStatus.OK)
-def submit_feedback(request: Request):
+def submit_feedback(payload: dict):
     """
     Create feedback submission.
-    :return:
+    Expects payload: {"feedback": str, "email_address": str, "ratings": {...}}
     """
     try:
         feedback_service.submit_feedback(
-            text=request.get("feedback"), email_address=request.get("email_address"), ratings=request.get("ratings")
+            text=payload.get("feedback"),
+            email_address=payload.get("email_address"),
+            ratings=payload.get("ratings")
         )
+        return {"status": "success"}
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
