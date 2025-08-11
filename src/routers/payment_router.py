@@ -11,7 +11,7 @@ from src.constants.stripe_price_ids import (
 )
 from src.repositories.test_repository import TestRepository
 from src.services.order_service import OrderService
-from src.utils.stripe_utils import generate_line_items, get_stripe_key, DOGSHOW_DOMAIN
+from src.utils.stripe_utils import DOGSHOW_DOMAIN, generate_line_items, get_stripe_key
 
 router = APIRouter(prefix="/payment", tags=["Payments"])
 

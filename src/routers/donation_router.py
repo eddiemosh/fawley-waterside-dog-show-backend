@@ -3,7 +3,8 @@ from http import HTTPStatus
 import stripe
 from fastapi import APIRouter, HTTPException
 
-from src.constants.stripe_product_ids import donation_product_id
+from src.constants.stripe_product_ids import donation_product_id, test_donation_product_id
+from src.repositories.test_repository import TestRepository
 from src.services.donation_service import DonationService
 from src.services.email_service import EmailService
 from src.utils.stripe_utils import DOGSHOW_DOMAIN, get_stripe_key
@@ -36,7 +37,7 @@ def record_donation(payload: dict):
                 {
                     "price_data": {
                         "currency": "gbp",
-                        "product": donation_product_id,
+                        "product": donation_product_id if not TestRepository().get_test_mode() else test_donation_product_id,
                         "unit_amount": int(donation.amount * 100),
                     },
                     "quantity": 1,
