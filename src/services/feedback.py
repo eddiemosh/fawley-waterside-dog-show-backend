@@ -1,3 +1,5 @@
+from pydantic import ValidationError
+
 from src.data_models.feedback_data_models import FeedbackRatings, FeedbackSubmission
 from src.services.database import Database
 
@@ -9,9 +11,14 @@ class FeedbackService:
 
     database_service = Database()
 
-    def get_feedback_submissions(self):
-        results = self.database_service.get_feedback_submissions()
-        submissions = [FeedbackSubmission(**result) for result in results]
+    def get_feedback_submissions(self) -> list[FeedbackSubmission]:
+        try:
+            results = self.database_service.get_feedback_submissions()
+            submissions = [FeedbackSubmission(**result) for result in results]
+        except ValidationError as ve:
+            raise Exception(f"Validation error while processing feedback submissions: {str(repr(ve.errors()))}")
+        except Exception as ex:
+            raise Exception(f"Failed to fetch feedback submissions: {str(ex)}")
         return submissions
 
     def submit_feedback(self, text: str, ratings: FeedbackRatings, email_address: str = ""):
