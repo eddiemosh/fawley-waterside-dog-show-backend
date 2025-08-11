@@ -21,7 +21,6 @@ class FeedbackSubmission(BaseModel):
     Data model for feedback submission.
     """
 
-    name: str
     email: str
-    message: str
+    text: str
     ratings: FeedbackRatings
