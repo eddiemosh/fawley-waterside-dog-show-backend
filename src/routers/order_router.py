@@ -9,7 +9,6 @@ from src.services.orders import OrderService
 
 router = APIRouter(prefix="/order", tags=["Orders"])
 
-
 order_service = OrderService()
 
 

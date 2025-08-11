@@ -6,7 +6,6 @@ from src.services.feedback import FeedbackService
 
 router = APIRouter(prefix="/feedback", tags=["Feedback"])
 
-
 feedback_service = FeedbackService()
 
 
