@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src.routers import analytics_router, feedback_router, order_router, payment_router, test_router
+from src.routers import analytics_router, feedback_router, order_router, payment_router, test_router, donation_router
 
 app = FastAPI(title="Dogshow Backend")
 
@@ -10,6 +10,7 @@ app.include_router(order_router.router)
 app.include_router(analytics_router.router)
 app.include_router(test_router.router)
 app.include_router(feedback_router.router)
+app.include_router(donation_router.router)
 
 origins = [
     "http://localhost:3000",  # Local frontend (React dev server)

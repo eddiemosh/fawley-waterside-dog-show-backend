@@ -8,7 +8,7 @@ from typing import Dict, List
 
 class EmailService:
     @staticmethod
-    def send_confirmation_email(
+    def send_order_confirmation_email(
         to_email: str,
         subject: str,
         name: str,
@@ -87,4 +87,70 @@ class EmailService:
             return True
         except Exception as e:
             print(f"Failed to send email: {e}")
+            raise e
+
+    @staticmethod
+    def send_donation_confirmation_email(
+        to_email: str,
+        name: str,
+        donation_id: str,
+        date_of_donation: str,
+        amount: str,
+    ) -> bool:
+        """
+        Send a donation confirmation email to the customer, styled like the order confirmation email.
+        :return: True if email is successful
+        """
+        subject = "Thank You For Your Donation!"
+        body = f"""
+            <html>
+              <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <p>Hello {name},</p>
+                <p>Thank you for your donation!</p>
+                <p><strong>Donation ID:</strong> {donation_id}</p>
+                <p><strong>Date of Donation:</strong> {date_of_donation} (GMT)</p>
+                <p><strong>Amount:</strong> £{amount}</p>
+                <p>
+                  This is your donation confirmation email. Please keep this for your records.<br/>
+                  If you have any questions, contact us at
+                  <a href="mailto:fawleydogshow@gmail.com"> fawleydogshow@gmail.com</a>.
+                </p>
+                <p>Kind regards,<br/>Fawley Dog Show Team</p>
+                <img src="cid:dog_thank_you" alt="Thank you dog"
+                 style="display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
+              </body>
+            </html>
+            """
+
+        # Email setup
+        from_email = "fawleydogshow@gmail.com"
+        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
+        if not from_password:
+            raise ValueError("No email password")
+        msg = MIMEMultipart()
+        msg["From"] = from_email
+        msg["To"] = to_email
+        msg["Subject"] = subject
+
+        msg.attach(MIMEText(body, "html"))
+
+        # Attach the dog thank you image
+        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        with open(image_path, "rb") as img_file:
+            img = MIMEImage(img_file.read())
+            img.add_header("Content-ID", "<dog_thank_you>")
+            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
+            msg.attach(img)
+
+        # Connect and send
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(from_email, from_password)
+            server.send_message(msg)
+            server.quit()
+            print(f"Donation confirmation email sent to {to_email}")
+            return True
+        except Exception as e:
+            print(f"Failed to send donation email: {e}")
             raise e

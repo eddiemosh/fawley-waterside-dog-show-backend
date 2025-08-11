@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.constants.stripe_product_ids import donation_product_id
 from src.services.donation_service import DonationService
+from src.services.email_service import EmailService
 from src.utils.stripe_utils import DOGSHOW_DOMAIN, get_stripe_key
 
 router = APIRouter(prefix="/donation", tags=["Donations"])
@@ -43,6 +44,14 @@ def record_donation(payload: dict):
             ],
             mode="payment",
         )
+        if donation.email_address:
+            EmailService.send_donation_confirmation_email(
+                to_email=donation.email_address,
+                name=f"{donation.first_name}",
+                donation_id=donation.donation_id,
+                amount=str(donation.amount),
+                date_of_donation=donation.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            )
         return {"donation_id": donation.donation_id, "checkout_url": session.url}
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))

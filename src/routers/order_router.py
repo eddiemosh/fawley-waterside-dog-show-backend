@@ -77,7 +77,7 @@ def successful_order(order_id: dict) -> int:
 
         if order.email_address:  # Only send email if email address is provided
             print(f"Sending confirmation email to {order.email_address} for order {order.order_id}")
-            email_result = EmailService.send_confirmation_email(
+            email_result = EmailService.send_order_confirmation_email(
                 to_email=order.email_address,
                 subject="Order Confirmation",
                 name=order.first_name,
