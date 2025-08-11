@@ -1,12 +1,8 @@
 from http import HTTPStatus
-from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Request
-from starlette.requests import Request
+from fastapi import APIRouter, HTTPException
 
-from src.services.email import EmailService
 from src.services.feedback import FeedbackService
-from src.services.orders import OrderService
 
 router = APIRouter(prefix="/feedback", tags=["Feedback"])
 
@@ -37,9 +33,7 @@ def submit_feedback(payload: dict):
     """
     try:
         feedback_service.submit_feedback(
-            text=payload.get("feedback"),
-            email_address=payload.get("email_address"),
-            ratings=payload.get("ratings")
+            text=payload.get("feedback"), email_address=payload.get("email_address"), ratings=payload.get("ratings")
         )
         return {"status": "success"}
     except Exception as ex:
