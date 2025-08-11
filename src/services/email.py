@@ -46,11 +46,12 @@ class EmailService:
                 </ul>
                 <p>
                   This is your confirmation email. Please keep this for your records.<br/>
-                  If you run into any trouble, speak to organisers or send an email with your order id to 
-                  <a href="mailto:fawleydogshow@gmail.com">fawleydogshow@gmail.com</a>.
+                  If you run into any trouble, speak to organisers or send an email with your order id to
+                  <a href="mailto:fawleydogshow@gmail.com"> fawleydogshow@gmail.com</a>.
                 </p>
                 <p>Kind regards,<br/>Fawley Dog Show Team</p>
-                <img src="cid:dog_thank_you" alt="Thank you dog" style="display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
+                <img src="cid:dog_thank_you" alt="Thank you dog"
+                 style="display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
               </body>
             </html>
             """
@@ -59,7 +60,7 @@ class EmailService:
         from_email = "fawleydogshow@gmail.com"
         from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
         if not from_password:
-            raise ValueError(f"No email password")
+            raise ValueError("No email password")
         msg = MIMEMultipart()
         msg["From"] = from_email
         msg["To"] = to_email

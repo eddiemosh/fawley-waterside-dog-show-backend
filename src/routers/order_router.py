@@ -87,7 +87,7 @@ def successful_order(order_id: dict) -> int:
                 amount=order.amount,
             )
             if not email_result:
-                raise Exception(f"Failed to send email")
+                raise Exception("Failed to send email")
         return int(HTTPStatus.ACCEPTED)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Error performing successful order workflow due to {str(ex)}")

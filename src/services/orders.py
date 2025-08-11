@@ -50,7 +50,7 @@ class OrderService:
             )
             result = self.database_service.create_order(order=order)
             if not result:
-                raise Exception(f"False result when attempting to create order in db")
+                raise Exception("False result when attempting to create order in db")
             return order
         except Exception as ex:
             print(f"Exception {ex} when attempting to create order")

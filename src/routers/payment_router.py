@@ -23,9 +23,9 @@ secret_key = os.getenv("STRIPE_SECRET_KEY")
 test_secret_key = os.getenv("STRIPE_SECRET_TEST_KEY")
 
 if not secret_key:
-    raise ValueError(f"Stripe key not loaded!")
+    raise ValueError("Stripe key not loaded!")
 if not test_secret_key:
-    raise ValueError(f"Stripe key not loaded!")
+    raise ValueError("Stripe key not loaded!")
 
 stripe.api_version = "2025-03-31.basil"
 stripe.api_key = secret_key
@@ -84,7 +84,8 @@ def submit_payment(
             )
         except Exception as ex:
             print(
-                f"Stripe checkout session creation failed due to {str(ex)} with line items {line_items} and order {order.model_dump()}"
+                f"Stripe checkout session creation failed due to "
+                f"{str(ex)} with line items {line_items} and order {order.model_dump()}"
             )
             raise ex
     except Exception as e:
