@@ -39,7 +39,6 @@ class Database:
         self.orders_collection.create_index("order_id", unique=True)
         self._initialized = True
 
-        self.feedback_collection.delete_many({})
 
     def get_order(self, order_id: str) -> dict:
         result = self.orders_collection.find_one({"order_id": order_id}, {"id": 0})
