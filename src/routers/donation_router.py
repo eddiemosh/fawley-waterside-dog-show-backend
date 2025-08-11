@@ -15,7 +15,7 @@ stripe.api_key = get_stripe_key()
 donation_service = DonationService()
 
 
-@router.post("/donation", status_code=HTTPStatus.CREATED)
+@router.post("/create", status_code=HTTPStatus.CREATED)
 def record_donation(payload: dict):
     """
     Record a donation.
