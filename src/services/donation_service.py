@@ -44,9 +44,5 @@ class DonationService:
         if not result:
             raise Exception("Failed to create donation in the database")
 
-        try:
-            pass
-        except Exception as ex:
-            print(f"Exception {ex} when attempting to create donation")
-            raise ex
-        return {"donation_id": donation.donation_id, "checkout_url": session.url}
+        print(f"Donation {donation.model_dump()} created with ID: {donation.donation_id}")
+        return donation
