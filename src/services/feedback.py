@@ -32,8 +32,7 @@ class FeedbackService:
         """
         feedback_id = generate_id()
         result = self.database_service.create_feedback_submission(
-            feedback_id=feedback_id,
-            message=message, ratings=ratings, email_address=email_address
+            feedback_id=feedback_id, message=message, ratings=ratings, email_address=email_address
         )
         if not result:
             raise Exception("Failed to submit feedback")
