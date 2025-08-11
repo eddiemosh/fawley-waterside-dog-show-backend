@@ -4,7 +4,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
-from src.services.email import EmailService
+from src.services.email_service import EmailService
 from src.services.order_service import OrderService
 
 router = APIRouter(prefix="/order", tags=["Orders"])

@@ -3,7 +3,7 @@ from http import HTTPStatus
 from fastapi import APIRouter, HTTPException
 
 from src.data_models.feedback_data_models import FeedbackRatings
-from src.services.feedback import FeedbackService
+from src.services.feedback_service import FeedbackService
 
 router = APIRouter(prefix="/feedback", tags=["Feedback"])
 
