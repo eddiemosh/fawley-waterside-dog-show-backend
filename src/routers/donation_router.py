@@ -61,7 +61,7 @@ def record_donation(payload: dict):
         raise HTTPException(status_code=500, detail=str(ex))
 
 @router.get("", status_code=HTTPStatus.OK)
-def get_donation(donation_id: Optional[str]):
+def get_donation(donation_id: Optional[str] = None):
     """
     Get a donation by ID.
     :param donation_id: The ID of the donation to retrieve. If not provided, returns all donations.
