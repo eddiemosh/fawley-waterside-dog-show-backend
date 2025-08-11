@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException
 
 from src.services.email import EmailService
-from src.services.orders import OrderService
+from src.services.order_service import OrderService
 
 router = APIRouter(prefix="/order", tags=["Orders"])
 
@@ -59,7 +59,7 @@ def successful_order(order_id: dict) -> int:
         if not order_id_value:
             raise Exception("Order ID not provided in request body")
         date_of_purchase = datetime.now(tz=timezone.utc)
-        update_result = order_service.update_order_status(
+        update_result = order_service.update_order_details(
             order_id=order_id_value, status=True, date_of_purchase=date_of_purchase
         )
         if not update_result:
@@ -99,7 +99,7 @@ def delete_order(order_id: dict) -> int:
         order_id_value = order_id.get("order_id")
         if not order_id_value:
             raise Exception("Order ID not provided in request body")
-        result = order_service.database_service.delete_order(order_id=order_id_value)
+        result = order_service.orders_repository.delete_order(order_id=order_id_value)
         if not result:
             raise Exception(f"Failed to delete order with id {order_id_value}")
         return int(HTTPStatus.ACCEPTED)

@@ -1,7 +1,7 @@
 from pydantic import ValidationError
 
 from src.data_models.feedback_data_models import FeedbackRatings, FeedbackSubmission
-from src.services.database import Database
+from src.utils.database import Database
 from src.utils.record_id import generate_id
 
 
