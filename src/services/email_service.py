@@ -160,7 +160,7 @@ class EmailService:
         body = f"""
             <html>
               <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
-                <p>Hey {name}!</p>
+                <p>Hey {name.title()}!</p>
                 <p><strong>I'd really appreciate some feedback if you have 30 seconds?</strong></p>
                 <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
                 <p>We're proud to share that, together, we raised roughly <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
