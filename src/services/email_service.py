@@ -168,18 +168,18 @@ class EmailService:
                   <a href=\"{DOGSHOW_DOMAIN + "/feedback"}\" style=\"background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
                 </p>
                 <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>The Fawley Dog Show Team</p>
-                <img src=\"cid:dog_thank_you\" alt=\"Thank you dog\"
+                <img src=\"cid:salarian_homes\" alt=\"Salarian Homes\"
                  style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
               </body>
             </html>
             """
         msg = MIMEMultipart()
         msg.attach(MIMEText(body, "html"))
-        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        image_path = os.path.join(os.path.dirname(__file__), "../images/salarian_homes.png")
         with open(image_path, "rb") as img_file:
             img = MIMEImage(img_file.read())
-            img.add_header("Content-ID", "<dog_thank_you>")
-            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
+            img.add_header("Content-ID", "<salarian_homes>")
+            img.add_header("Content-Disposition", "inline", filename="Salarian Homes.png")
             msg.attach(img)
         try:
             self.__send_email(to_email=to_email, subject=subject, msg=msg)
