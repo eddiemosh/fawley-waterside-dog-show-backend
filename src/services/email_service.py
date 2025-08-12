@@ -106,16 +106,21 @@ class EmailService:
             <html>
               <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                 <p>Hello {name},</p>
-                <p>Thank you for your donation!</p>
+                <p><strong>Thank you so much for your generous donation!</strong></p>
+                <p>Your support means a great deal to us and will directly help fund vital cancer research and support services.</p>
                 <p><strong>Donation ID:</strong> {donation_id}</p>
                 <p><strong>Date of Donation:</strong> {date_of_donation} (GMT)</p>
                 <p><strong>Amount:</strong> £{amount}</p>
+                <p>
+                  Every contribution helps Southampton Cancer Research get closer to breakthroughs in cancer treatment and provides hope to those affected.<br/>
+                  We are deeply grateful for your kindness and commitment to making a difference.
+                </p>
                 <p>
                   This is your donation confirmation email. Please keep this for your records.<br/>
                   If you have any questions, contact us at
                   <a href="mailto:fawleydogshow@gmail.com"> fawleydogshow@gmail.com</a>.
                 </p>
-                <p>Kind regards,<br/>Fawley Dog Show Team</p>
+                <p>With heartfelt thanks,<br/>Fawley Dog Show Team</p>
                 <img src="cid:dog_thank_you" alt="Thank you dog"
                  style="display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;"/>
               </body>
