@@ -154,15 +154,25 @@ class EmailService:
             print(f"Failed to send donation email: {e}")
             raise e
 
-    def send_feedback_email(self, name: str, to_email: str):
+    def _format_ticket_list(self, tickets: list[str]) -> str:
+        if not tickets:
+            return ""
+        if len(tickets) == 1:
+            return tickets[0]
+        if len(tickets) == 2:
+            return f"{tickets[0]} and {tickets[1]}"
+        return f"{', '.join(tickets[:-1])} and {tickets[-1]}"
+
+    def send_feedback_email(self, name: str, to_email: str, tickets: list[str]):
         subject = "Thank You for Attending the Fawley Dog Show! Any feedback?"
         feedback_url = f"{DOGSHOW_DOMAIN}/feedback"
         body = f"""
             <html>
               <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
                 <p>Hey {name.title()}!</p>
-                <p style="background: #f63131; color: #fff; padding: 12px 18px; border-radius: 6px; font-weight: bold; text-align: center;"><strong>I'd really appreciate some feedback if you have 30 seconds?</strong></p>
+                <p style=\"background: #f63131; color: #fff; padding: 12px 18px; border-radius: 6px; font-weight: bold; text-align: center;\"><strong>I'd really appreciate some feedback if you have 30 seconds?</strong></p>
                 <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
+                <p>I see you bought the {self._format_ticket_list(tickets)} tickets. I appreciate your support for cancer research</p>
                 <p>We're proud to share that, together, we raised roughly <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
                 <p>Our event is organised and run entirely by volunteers, and we're still growing. We are also funded by generous sponsors who make this event possible.</p>
                 <p>Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>

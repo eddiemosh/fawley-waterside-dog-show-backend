@@ -16,7 +16,7 @@ class PromotionType(str, Enum):
 
 
 @router.post("", status_code=HTTPStatus.OK)
-def send_promotion(promotion_type: PromotionType, name: str, email_address: str):
+def send_promotion(promotion_type: PromotionType):
     if not promotion_type == PromotionType.FEEDBACK:
         raise HTTPException(status_code=400, detail="Unsupported promotion type")
     try:
@@ -31,13 +31,18 @@ def send_promotion(promotion_type: PromotionType, name: str, email_address: str)
                 email_address="hardyedward18@gmail.com",
                 order_id="test_order_id",
                 amount="12.00",
-                pedigree_tickets=PedigreeTickets(),
-                all_dog_tickets=AllDogTickets(),
+                pedigree_tickets=PedigreeTickets(any_puppy=1, any_junior=1),
+                all_dog_tickets=AllDogTickets(childs_best_friend=1, best_rescue=1),
             )
         ]  # Mocking an order for testing purposes)]
         for order in orders:
             if order.email_address:
-                email_service.send_feedback_email(name=order.first_name, to_email=order.email_address)
+                tickets = order.pedigree_tickets.model_dump(exclude_none=True)
+                tickets.update(order.all_dog_tickets.model_dump(exclude_none=True))
+                ticket_names = []
+                for ticket_name, quantity in tickets.items():
+                    ticket_names.append(ticket_name.replace("_", " ").title())
+                email_service.send_feedback_email(name=order.first_name, to_email=order.email_address, tickets=ticket_names)
         return {"message": "Feedback promotion emails sent successfully"}
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
