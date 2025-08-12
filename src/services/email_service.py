@@ -165,14 +165,17 @@ class EmailService:
                 <p>We're proud to share that, together, we raised <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
                 <p>Our event is organised and run entirely by volunteers, and we're still growing. We are also funded by generous sponsors who make this event possible.</p>
                 <p>Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>
-                <p style=\"text-align: center;\">
-                  <a href=\"{feedback_url}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
-                </p>
+                <div style=\"margin: 32px 0; text-align: center;\">
+                  <a href=\"{feedback_url}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;\">Give Feedback</a>
+                </div>
                 <p><strong>Check out the Composite Doors from our sponsor, Salarian Homes!</strong><br/>
-                For every door purchased, <strong>£25 goes directly to cancer research</strong>. <a href=\"https://salarianhomes.co.uk/composite-doors\" style=\"color: #f63131; font-weight: bold;\">Learn more here</a>.</p>
+                For every door purchased, <strong>£25 goes directly to cancer research</strong></p>
                 <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>The Fawley Dog Show Team</p>
                 <img src=\"cid:salarian_homes\" alt=\"Salarian Homes\"
                  style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
+                <p style=\"text-align: center; margin-top: 24px;\">
+                  <a href=\"https://www.facebook.com/profile.php?id=61554694584616\" style=\"color: #4267B2; font-weight: bold; text-decoration: none; font-size: 1.1em;\">Check out what we're doing on our Facebook page!</a>
+                </p>
               </body>
             </html>
             """
