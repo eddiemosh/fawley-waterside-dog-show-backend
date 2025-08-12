@@ -25,11 +25,3 @@ def send_promotion(promotion_type: PromotionType, name: str, email_address: str)
         raise HTTPException(status_code=500, detail=str(ex))
 
 
-@router.get("", status_code=HTTPStatus.OK)
-def get_test_mode():
-    try:
-        test_repository = TestRepository()
-        test_mode = test_repository.get_test_mode()
-        return {"test_mode": test_mode}
-    except Exception as ex:
-        raise HTTPException(status_code=500, detail=str(ex))
