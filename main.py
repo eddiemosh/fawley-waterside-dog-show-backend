@@ -9,6 +9,7 @@ from src.routers import (
     payment_router,
     promotion_router,
     test_router,
+    # customer_router,
 )
 
 app = FastAPI(title="Dogshow Backend")
@@ -20,6 +21,7 @@ app.include_router(test_router.router)
 app.include_router(feedback_router.router)
 app.include_router(donation_router.router)
 app.include_router(promotion_router.router)
+# app.include_router(customer_router.router)
 
 origins = [
     "http://localhost:3000",  # Local frontend (React dev server)
