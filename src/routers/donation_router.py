@@ -63,6 +63,7 @@ def record_donation(payload: dict):
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 
+
 @router.get("", status_code=HTTPStatus.OK)
 def get_donation(donation_id: Optional[str] = None):
     """
