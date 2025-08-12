@@ -155,18 +155,21 @@ class EmailService:
             raise e
 
     def send_feedback_email(self, name: str, to_email: str):
-        subject = "Thank You for Attending the Fawley Dog Show!"
+        subject = "Thank You for Attending the Fawley Dog Show! Any feedback?"
+        feedback_url = f"{DOGSHOW_DOMAIN}/feedback"
         body = f"""
             <html>
               <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
                 <p>Hey {name}!</p>
                 <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
                 <p>We're proud to share that, together, we raised <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
-                <p>Our event is organised and run entirely by volunteers, and we're still growing. Your feedback is invaluable to us as we strive to make each year even better.</p>
-                <p>Please take a moment to let us know about your experience:</p>
+                <p>Our event is organised and run entirely by volunteers, and we're still growing. We are also funded by generous sponsors who make this event possible.</p>
+                <p>Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>
                 <p style=\"text-align: center;\">
-                  <a href=\"{DOGSHOW_DOMAIN + "/feedback"}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
+                  <a href=\"{feedback_url}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
                 </p>
+                <p><strong>Check out the Composite Doors from our sponsor, Salarian Homes!</strong><br/>
+                For every door purchased, <strong>£25 goes directly to cancer research</strong>. <a href=\"https://salarianhomes.co.uk/composite-doors\" style=\"color: #f63131; font-weight: bold;\">Learn more here</a>.</p>
                 <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>The Fawley Dog Show Team</p>
                 <img src=\"cid:salarian_homes\" alt=\"Salarian Homes\"
                  style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
