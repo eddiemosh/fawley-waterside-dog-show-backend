@@ -46,12 +46,6 @@ class Database:
         self._client = MongoClient(connection_string)
         self._db = self._client["dogshow"]
 
-        result = self._db["orders"].update_one({"order_id": "ZJ9XN4"}, {"$set": {"email_address": "camille-101@hotmail.co.uk"}})
-        if result.modified_count == 0:
-            print("didn't update")
-        else:
-            print("updated order with email address")
-
     def __init__(self):
         if hasattr(self, "_initialized") and self._initialized:
             return
