@@ -4,7 +4,7 @@ from typing import Optional
 import stripe
 from fastapi import APIRouter, HTTPException
 
-from src.constants.stripe_product_ids import donation_product_id, test_donation_product_id
+from src.constants.stripe_product_ids import live_donation_product_id, test_donation_product_id
 from src.repositories.test_repository import TestRepository
 from src.services.donation_service import DonationService
 from src.services.email_service import EmailService
@@ -31,6 +31,11 @@ def record_donation(payload: dict):
             email_address=payload.get("email_address", ""),
             amount=payload.get("amount"),
         )
+        if TestRepository().get_test_mode():
+            donation_product_id = test_donation_product_id
+        else:
+            donation_product_id = live_donation_product_id
+
         session = stripe.checkout.Session.create(
             success_url=DOGSHOW_DOMAIN + f"/donation-success?donationId={donation.donation_id}",
             cancel_url=DOGSHOW_DOMAIN + f"/donation-failure?donationId={donation.donation_id}",
@@ -38,9 +43,7 @@ def record_donation(payload: dict):
                 {
                     "price_data": {
                         "currency": "gbp",
-                        "product": (
-                            donation_product_id if not TestRepository().get_test_mode() else test_donation_product_id
-                        ),
+                        "product": donation_product_id,
                         "unit_amount": int(donation.amount * 100),
                     },
                     "quantity": 1,
