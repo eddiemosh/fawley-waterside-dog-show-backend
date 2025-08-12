@@ -30,7 +30,8 @@ class DonationService:
         except ValidationError as ve:
             raise Exception(f"Validation error while processing donations: {str(repr(ve.errors()))}")
         except Exception as ex:
-            raise Exception(f"Failed to fetch feedback submissions: {str(ex)}")
+            print(ex)
+            raise Exception(f"Failed to fetch donations: {str(ex)}")
         return donations
 
     def create_donation(

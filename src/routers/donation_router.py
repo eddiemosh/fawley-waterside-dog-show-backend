@@ -74,4 +74,5 @@ def get_donation(donation_id: Optional[str] = None):
         donations = donation_service.get_donations(donation_id=donation_id)
         return donations
     except Exception as ex:
+        print("Error fetching donations:", str(ex))
         raise HTTPException(status_code=500, detail=str(ex))
