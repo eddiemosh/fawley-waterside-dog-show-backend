@@ -21,3 +21,9 @@ class DonationsRepository:
         if not result:
             raise Exception(f"Donation with ID {donation_id} not found")
         return result
+
+    def delete_donation(self, donation_id: str):
+        result = self.collection.delete_one({"donation_id": donation_id})
+        if result.deleted_count == 0:
+            raise Exception(f"Donation with ID {donation_id} not found or already deleted")
+        return result.deleted_count

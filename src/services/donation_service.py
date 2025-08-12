@@ -51,3 +51,13 @@ class DonationService:
 
         print(f"Donation {donation.model_dump()} created with ID: {donation.donation_id}")
         return donation
+
+    def delete_donation(self, donation_id: str) -> bool:
+        try:
+            result = self.donation_repository.delete_donation(donation_id=donation_id)
+            if result.deleted_count == 0:
+                raise Exception(f"Donation with ID {donation_id} not found or already deleted")
+            return True
+        except Exception as ex:
+            print(ex)
+            raise Exception(f"Failed to delete donation: {str(ex)}")

@@ -76,3 +76,21 @@ def get_donation(donation_id: Optional[str] = None):
     except Exception as ex:
         print("Error fetching donations:", str(ex))
         raise HTTPException(status_code=500, detail=str(ex))
+
+
+@router.delete("/delete", status_code=HTTPStatus.ACCEPTED)
+def delete_donation(donation_id: str):
+    """
+    Delete a donation by ID.
+    :param donation_id: The ID of the donation to delete.
+    :return: A message indicating the donation was deleted successfully.
+    """
+    try:
+        result = donation_service.delete_donation(donation_id=donation_id)
+        if result:
+            return {"message": f"Donation with ID {donation_id} deleted successfully."}
+        else:
+            raise HTTPException(status_code=404, detail=f"Donation with ID {donation_id} not found.")
+    except Exception as ex:
+        print("Error deleting donation:", str(ex))
+        raise HTTPException(status_code=500, detail=str(ex))
