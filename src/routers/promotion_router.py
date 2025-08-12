@@ -56,24 +56,31 @@ def send_promotion(promotion_type: PromotionType):
             ),
         ]  # Mocking an order for testing purposes)]
 
-        ticket_names = {"email": ["tickets"]}
-        order_names = {"email": "first_name"}
+        ticket_names = {}
+        order_names = {}
         for order in orders:
             if order.email_address:
+
                 if order.email_address not in order_names:
+                    print("attemtping to add order name")
                     order_names[order.email_address] = order.first_name
+                    print("Attempting to combine ticket lists")
                 tickets = order.pedigree_tickets.model_dump(exclude_none=True)
                 tickets.update(order.all_dog_tickets.model_dump(exclude_none=True))
                 for ticket_name, quantity in tickets.items():
                     if order.email_address in ticket_names:
                         existing_tickets = ticket_names.get(order.email_address)  # get existing ticket names
+                        print(f"existing tickets for {order.email_address}:", existing_tickets)
                         new_tickets = (
                             existing_tickets + ticket_name.replace("_", " ").title()
                         )  # add the new ticket name
+                        print(f"new tickets for {order.email_address}:", new_tickets)
                         ticket_names[order.email_address] = new_tickets  # set the new value
                     else:
+                        print("Adding new ticket name for email:", order.email_address)
                         ticket_names[order.email_address] = [ticket_name.replace("_", " ").title()]
         for email, name in order_names.items():
+            print("Sending feedback email to:", email, "with name:", name, "and tickets:", ticket_names.get(email))
             email_service.send_feedback_email(name=name, to_email=email, tickets=ticket_names.get(email))
         return {"message": "Feedback promotion emails sent successfully"}
     except Exception as ex:
