@@ -13,7 +13,6 @@ from src.utils.stripe_utils import DOGSHOW_DOMAIN, get_stripe_key
 router = APIRouter(prefix="/donation", tags=["Donations"])
 
 stripe.api_version = "2025-03-31.basil"
-stripe.api_key = get_stripe_key()
 donation_service = DonationService()
 
 
@@ -35,6 +34,7 @@ def record_donation(payload: dict):
             donation_product_id = test_donation_product_id
         else:
             donation_product_id = live_donation_product_id
+        stripe.api_key = get_stripe_key()
 
         session = stripe.checkout.Session.create(
             success_url=DOGSHOW_DOMAIN + f"/donation-success?donationId={donation.donation_id}",
