@@ -71,9 +71,7 @@ def send_promotion(promotion_type: PromotionType):
                     if order.email_address in ticket_names:
                         existing_tickets = ticket_names.get(order.email_address)  # get existing ticket names
                         print(f"existing tickets for {order.email_address}:", existing_tickets)
-                        new_tickets = (
-                            existing_tickets + ticket_name.replace("_", " ").title()
-                        )  # add the new ticket name
+                        new_tickets = existing_tickets.append(ticket_name.replace("_", " ").title()) # add the new ticket name
                         print(f"new tickets for {order.email_address}:", new_tickets)
                         ticket_names[order.email_address] = new_tickets  # set the new value
                     else:

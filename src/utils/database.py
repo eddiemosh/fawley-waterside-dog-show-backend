@@ -32,8 +32,6 @@ class Database:
             db_credentials_raw = get_secret_value_response["SecretString"]
         except Exception as e:
             raise RuntimeError(f"Failed to fetch DB credentials from AWS Secrets Manager: {e}")
-        print("credential type:", type(db_credentials_raw))
-        print("credential value:", db_credentials_raw)
         db_credentials = json.loads(db_credentials_raw)
         db_password = db_credentials.get("password")
         if not db_password:
