@@ -164,7 +164,7 @@ class EmailService:
                 <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
                 <p>We're proud to share that, together, we raised <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
                 <p>Our event is organised and run entirely by volunteers, and we're still growing. We are also funded by generous sponsors who make this event possible.</p>
-                <p>Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>
+                <p><strong>I'd really appreciate some feedback if you have 30 seconds?</strong> Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>
                 <div style=\"margin: 32px 0; text-align: center;\">
                   <a href=\"{feedback_url}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;\">Give Feedback</a>
                 </div>
