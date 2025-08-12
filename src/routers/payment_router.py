@@ -22,7 +22,7 @@ stripe.api_version = "2025-03-31.basil"
 stripe.api_key = get_stripe_key()
 
 
-@router.post("/create-payment-intent", tags=["Payments"])
+@router.post("/create", tags=["Payments"])
 def submit_payment(
     first_name: str,
     last_name: str,

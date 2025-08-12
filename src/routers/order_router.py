@@ -12,7 +12,7 @@ router = APIRouter(prefix="/order", tags=["Orders"])
 order_service = OrderService()
 
 
-@router.get("/")
+@router.get("")
 def get_order(order_id: Optional[str] = None):
     try:
         if order_id:

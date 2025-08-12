@@ -32,8 +32,8 @@ def record_donation(payload: dict):
             amount=payload.get("amount"),
         )
         session = stripe.checkout.Session.create(
-            success_url=DOGSHOW_DOMAIN + f"/donation-success?donation_id={donation.donation_id}",
-            cancel_url=DOGSHOW_DOMAIN + f"/donation-failure?donation_id={donation.donation_id}",
+            success_url=DOGSHOW_DOMAIN + f"/donation-success?donationId={donation.donation_id}",
+            cancel_url=DOGSHOW_DOMAIN + f"/donation-failure?donationId={donation.donation_id}",
             line_items=[
                 {
                     "price_data": {
