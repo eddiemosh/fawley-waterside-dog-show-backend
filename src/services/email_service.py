@@ -5,10 +5,30 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Dict, List
 
+from src.constants.email import FROM_EMAIL
+from src.utils.stripe_utils import DOGSHOW_DOMAIN
+
 
 class EmailService:
-    @staticmethod
+    def __init__(self):
+        pass
+
+    def __send_email(self, to_email: str, subject: str, msg: MIMEMultipart) -> None:
+        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
+        if not from_password:
+            raise ValueError("No email password")
+        msg["From"] = FROM_EMAIL
+        msg["To"] = to_email
+        msg["Subject"] = subject
+
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(FROM_EMAIL, from_password)
+        server.send_message(msg)
+        server.quit()
+
     def send_order_confirmation_email(
+        self,
         to_email: str,
         subject: str,
         name: str,
@@ -56,16 +76,7 @@ class EmailService:
             </html>
             """
 
-        # Email setup
-        from_email = "fawleydogshow@gmail.com"
-        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
-        if not from_password:
-            raise ValueError("No email password")
         msg = MIMEMultipart()
-        msg["From"] = from_email
-        msg["To"] = to_email
-        msg["Subject"] = subject
-
         msg.attach(MIMEText(body, "html"))
 
         # Attach the dog thank you image
@@ -78,19 +89,15 @@ class EmailService:
 
         # Connect and send
         try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(from_email, from_password)
-            server.send_message(msg)
-            server.quit()
+            self.__send_email(to_email, subject, msg)
             print(f"Confirmation email sent to {to_email}")
             return True
         except Exception as e:
             print(f"Failed to send email: {e}")
             raise e
 
-    @staticmethod
     def send_donation_confirmation_email(
+        self,
         to_email: str,
         name: str,
         donation_id: str,
@@ -127,16 +134,7 @@ class EmailService:
             </html>
             """
 
-        # Email setup
-        from_email = "fawleydogshow@gmail.com"
-        from_password = os.getenv("DOGSHOW_EMAIL_PASSWORD")
-        if not from_password:
-            raise ValueError("No email password")
         msg = MIMEMultipart()
-        msg["From"] = from_email
-        msg["To"] = to_email
-        msg["Subject"] = subject
-
         msg.attach(MIMEText(body, "html"))
 
         # Attach the dog thank you image
@@ -149,13 +147,44 @@ class EmailService:
 
         # Connect and send
         try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(from_email, from_password)
-            server.send_message(msg)
-            server.quit()
+            self.__send_email(to_email=to_email, subject=subject, msg=msg)
             print(f"Donation confirmation email sent to {to_email}")
             return True
         except Exception as e:
             print(f"Failed to send donation email: {e}")
+            raise e
+
+    def send_feedback_email(self, name: str, to_email: str):
+        subject = "Thank You for Attending the Fawley Dog Show!"
+        body = f"""
+            <html>
+              <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
+                <p>Hey {name}!</p>
+                <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
+                <p>We're proud to share that, together, we raised <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
+                <p>Our event is organised and run entirely by volunteers, and we're still growing. Your feedback is invaluable to us as we strive to make each year even better.</p>
+                <p>Please take a moment to let us know about your experience:</p>
+                <p style=\"text-align: center;\">
+                  <a href=\"{DOGSHOW_DOMAIN + "/feedback"}\" style=\"background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
+                </p>
+                <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>The Fawley Dog Show Team</p>
+                <img src=\"cid:dog_thank_you\" alt=\"Thank you dog\"
+                 style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
+              </body>
+            </html>
+            """
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "html"))
+        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        with open(image_path, "rb") as img_file:
+            img = MIMEImage(img_file.read())
+            img.add_header("Content-ID", "<dog_thank_you>")
+            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
+            msg.attach(img)
+        try:
+            self.__send_email(to_email=to_email, subject=subject, msg=msg)
+            print(f"Feedback email sent to {to_email}")
+            return True
+        except Exception as e:
+            print(f"Failed to send feedback email: {e}")
             raise e
