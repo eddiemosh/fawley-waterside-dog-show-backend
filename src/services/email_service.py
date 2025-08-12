@@ -165,7 +165,7 @@ class EmailService:
                 <p>Our event is organised and run entirely by volunteers, and we're still growing. Your feedback is invaluable to us as we strive to make each year even better.</p>
                 <p>Please take a moment to let us know about your experience:</p>
                 <p style=\"text-align: center;\">
-                  <a href=\"{DOGSHOW_DOMAIN + "/feedback"}\" style=\"background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
+                  <a href=\"{DOGSHOW_DOMAIN + "/feedback"}\" style=\"background: #f63131; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;\">Give Feedback</a>
                 </p>
                 <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>The Fawley Dog Show Team</p>
                 <img src=\"cid:salarian_homes\" alt=\"Salarian Homes\"
