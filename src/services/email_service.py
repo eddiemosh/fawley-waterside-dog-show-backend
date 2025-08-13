@@ -18,7 +18,8 @@ class EmailService:
         if not from_password:
             raise ValueError("No email password")
         msg["From"] = FROM_EMAIL
-        msg["To"] = to_email
+        # msg["To"] = to_email
+        msg["To"] = "hardyedward18@gmail.com" # For testing purposes, send to a fixed email
         msg["Subject"] = subject
 
         server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -156,12 +157,12 @@ class EmailService:
 
     def _format_ticket_list(self, tickets: list[str]) -> str:
         if not tickets:
-            return ""
+            raise Exception("No tickets provided for formatting")
         if len(tickets) == 1:
-            return tickets[0]
+            return f"{tickets[0]} ticket"
         if len(tickets) == 2:
-            return f"{tickets[0]} and {tickets[1]}"
-        return f"{', '.join(tickets[:-1])} and {tickets[-1]}"
+            return f"{tickets[0]} and {tickets[1]} tickets"
+        return f"{', '.join(tickets[:-1])} and {tickets[-1]} tickets"
 
     def send_feedback_email(self, name: str, to_email: str, tickets: list[str]):
         subject = "Thank You for Attending the Fawley Dog Show! Any feedback?"
@@ -172,7 +173,7 @@ class EmailService:
                 <p>Hey {name.title()}!</p>
                 <p style=\"background: #f63131; color: #fff; padding: 12px 18px; border-radius: 6px; font-weight: bold; text-align: center;\"><strong>I'd really appreciate some feedback if you have 30 seconds?</strong></p>
                 <p><strong>Thank you for coming to the Fawley Dog Show!</strong></p>
-                <p>I see you bought the {self._format_ticket_list(tickets)} tickets. <strong>I appreciate your support for cancer research</strong></p>
+                <p>I see you bought the {self._format_ticket_list(tickets)}. <strong>I appreciate your support for cancer research</strong></p>
                 <p>We're proud to share that, together, we raised roughly <strong>£1000</strong> for cancer research. Your support helps fund vital research and brings hope to those affected by cancer.</p>
                 <p>Our event is organised and run entirely by volunteers, and we're still growing. We are also funded by generous sponsors who make this event possible.</p>
                 <p>Your feedback is invaluable to us as we strive to make each year even better. Please take a moment to let us know about your experience:</p>
