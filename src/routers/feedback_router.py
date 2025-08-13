@@ -42,3 +42,19 @@ def submit_feedback(payload: dict):
         return {"status": "success"}
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
+
+
+@router.delete("/delete", status_code=HTTPStatus.OK)
+def delete_feedback(feedback_id: str):
+    """
+    Delete feedback submission by ID.
+    :param feedback_id: The ID of the feedback submission to delete.
+    :return: A message indicating the deletion status.
+    """
+    try:
+        if not feedback_id:
+            raise HTTPException(status_code=400, detail="Feedback ID is required.")
+        feedback_service.delete_feedback(feedback_id=feedback_id)
+        return {"message": "Feedback deleted successfully."}
+    except Exception as ex:
+        raise HTTPException(status_code=500, detail=str(ex))

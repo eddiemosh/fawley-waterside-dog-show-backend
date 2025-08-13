@@ -43,3 +43,18 @@ class FeedbackService:
         if not result:
             raise Exception("Failed to submit feedback")
         return result
+
+    def delete_feedback(self, feedback_id: str) -> bool:
+        """
+        Delete feedback by ID.
+        :param feedback_id: The ID of the feedback to delete.
+        :return: True if deletion was successful, False otherwise.
+        """
+        try:
+            result = self.feedback_repository.delete_feedback(feedback_id=feedback_id)
+            if result.deleted_count == 0:
+                raise Exception(f"Feedback with ID {feedback_id} not found or already deleted")
+            return True
+        except Exception as ex:
+            print(ex)
+            raise Exception(f"Failed to delete feedback: {str(ex)}")
