@@ -1,7 +1,7 @@
 from pydantic import ValidationError
 
 from src.data_models.feedback_data_models import FeedbackRatings, FeedbackSubmission
-from src.utils.database import Database
+from datetime import datetime, timezone
 from src.utils.record_id import generate_id
 from src.repositories.feedback_repository import FeedbackRepository
 
@@ -36,7 +36,8 @@ class FeedbackService:
             feedback_id=feedback_id,
             message=message,
             ratings=ratings,
-            email_address=email_address
+            email_address=email_address,
+            timestamp=datetime.now(tz=timezone.utc)
         )
         result = self.feedback_repository.create_feedback(
             feedback=feedback
