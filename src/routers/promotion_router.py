@@ -3,8 +3,6 @@ from http import HTTPStatus
 
 from fastapi import APIRouter, HTTPException
 
-from src.data_models.order_data_models import DoggieInfo, Order
-from src.data_models.tickets_data_models import AllDogTickets, PedigreeTickets
 from src.services.email_service import EmailService
 from src.services.order_service import OrderService
 
