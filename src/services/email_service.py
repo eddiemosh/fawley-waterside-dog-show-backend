@@ -19,7 +19,7 @@ class EmailService:
             raise ValueError("No email password")
         msg["From"] = FROM_EMAIL
         # msg["To"] = to_email
-        msg["To"] = "hardyedward18@gmail.com" # For testing purposes, send to a fixed email
+        msg["To"] = "hardyedward18@gmail.com"  # For testing purposes, send to a fixed email
         msg["Subject"] = subject
 
         server = smtplib.SMTP("smtp.gmail.com", 587)

@@ -34,14 +34,23 @@ def send_promotion(promotion_type: PromotionType):
                 tickets = order.pedigree_tickets.model_dump(exclude_none=True)
                 tickets.update(order.all_dog_tickets.model_dump(exclude_none=True))
                 for ticket_name, quantity in tickets.items():
-                    print("Processing ticket:", ticket_name, "with quantity", quantity, "for email:", order.email_address)
+                    print(
+                        "Processing ticket:", ticket_name, "with quantity", quantity, "for email:", order.email_address
+                    )
                     if order.email_address in ticket_names:
                         existing_tickets = ticket_names.get(order.email_address)  # get existing ticket names
                         print(f"existing tickets for {order.email_address}:", existing_tickets)
-                        new_tickets = existing_tickets + [ticket_name.replace("_", " ").title()] # add the new ticket name
+                        new_tickets = existing_tickets + [
+                            ticket_name.replace("_", " ").title()
+                        ]  # add the new ticket name
                         print(f"new tickets for {order.email_address}:", new_tickets)
                         ticket_names[order.email_address] = new_tickets  # set the new value
-                        print("Updated ticket names for email:", order.email_address, "to", ticket_names[order.email_address])
+                        print(
+                            "Updated ticket names for email:",
+                            order.email_address,
+                            "to",
+                            ticket_names[order.email_address],
+                        )
                     else:
                         print("Adding new ticket name for email:", order.email_address)
                         ticket_names[order.email_address] = [ticket_name.replace("_", " ").title()]
