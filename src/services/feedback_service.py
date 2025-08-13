@@ -15,7 +15,7 @@ class FeedbackService:
 
     def get_feedback_submissions(self) -> list[FeedbackSubmission]:
         try:
-            results = self.feedback_repository.get_feedback_submissions()
+            results = self.feedback_repository.get_all_feedback()
             submissions = [FeedbackSubmission(**result) for result in results]
         except ValidationError as ve:
             raise Exception(f"Validation error while processing feedback submissions: {str(repr(ve.errors()))}")
@@ -37,11 +37,9 @@ class FeedbackService:
             message=message,
             ratings=ratings,
             email_address=email_address,
-            timestamp=datetime.now(tz=timezone.utc)
+            timestamp=datetime.now(tz=timezone.utc),
         )
-        result = self.feedback_repository.create_feedback(
-            feedback=feedback
-        )
+        result = self.feedback_repository.create_feedback(feedback=feedback)
         if not result:
             raise Exception("Failed to submit feedback")
         return result
