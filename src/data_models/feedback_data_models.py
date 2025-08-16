@@ -12,7 +12,7 @@ class FeedbackRatings(BaseModel):
     activities: Optional[int] = None
     value_for_money: Optional[int] = None
     atmosphere: Optional[int] = None
-    food_and_drink: Optional[int] = None
+    food_and_drinks: Optional[int] = None
     vendors: Optional[int] = None
     overall_experience: Optional[int] = None
 
