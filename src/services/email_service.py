@@ -216,3 +216,44 @@ class EmailService:
         except Exception as e:
             print(f"Failed to send feedback email: {e}")
             raise e
+
+    def send_feedback_reminder_email(self, name: str, to_email: str, tickets: list[str]):
+        subject = "Reminder: We'd Love Your Feedback on the Fawley Dog Show!"
+        feedback_url = f"{DOGSHOW_DOMAIN}/feedback"
+        body = f"""
+            <html>
+              <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
+                <p>Hi {name.title().strip()},</p>
+                <p style=\"background: #f63131; color: #fff; padding: 12px 18px; border-radius: 6px; font-weight: bold; text-align: center;\">
+                  <strong>We'd really appreciate your feedback if you have 30 seconds!</strong>
+                </p>
+                <p>Thank you again for coming to the Fawley Dog Show and supporting cancer research.</p>
+                <p>I see you bought the {self._format_ticket_list(tickets)}.</p>
+                <p>Your feedback helps us improve and continue making a difference. Please click the button below to share your thoughts:</p>
+                <div style=\"margin: 24px 0; text-align: center;\">
+                  <a href=\"{feedback_url}\" style=\"background: #f63131; color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 18px; font-weight: bold; display: inline-block;\">Give Feedback</a>
+                </div>
+                <p style=\"margin-top: 32px;\">Thank you for helping us support cancer research!</p>
+                <img src=\"cid:dog_thank_you\" alt=\"Thank you dog\" style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
+              </body>
+            </html>
+            """
+
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "html"))
+
+        # Attach the dog thank you image
+        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        with open(image_path, "rb") as img_file:
+            img = MIMEImage(img_file.read())
+            img.add_header("Content-ID", "<dog_thank_you>")
+            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
+            msg.attach(img)
+
+        try:
+            self.__send_email(to_email, subject, msg)
+            print(f"Feedback reminder email sent to {to_email}")
+            return True
+        except Exception as e:
+            print(f"Failed to send feedback reminder email: {e}")
+            raise e
