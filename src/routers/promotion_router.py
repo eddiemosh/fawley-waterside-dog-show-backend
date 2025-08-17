@@ -23,24 +23,8 @@ def send_promotion(promotion_type: PromotionType):
         raise HTTPException(status_code=400, detail="Unsupported promotion type")
     try:
         email_service = EmailService()
-        # order_service = OrderService()
-        # orders = order_service.get_orders()
-        orders = [
-            Order(
-                order_id="12345",
-                first_name="Ed",
-                last_name="Hardy",
-                email_address="hardyedward18@gmail.com",
-                doggie_info=[DoggieInfo(name="Fido", date_of_birth="2020-01-01", sex="Male")],
-                pedigree_tickets=PedigreeTickets(any_puppy=1),
-                all_dog_tickets=AllDogTickets(
-                    prettiest=1,
-                ),
-                order_status=True,
-                amount="20.00",
-                date_of_purchase=datetime.now(tz=timezone.utc),
-            )
-        ]
+        order_service = OrderService()
+        orders = order_service.get_orders()
         ticket_names = {}
         order_names = {}
         for order in orders:
