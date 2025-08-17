@@ -19,7 +19,7 @@ class PromotionType(str, Enum):
 
 @router.post("", status_code=HTTPStatus.OK)
 def send_promotion(promotion_type: PromotionType):
-    if not promotion_type == PromotionType.FEEDBACK:
+    if not promotion_type not in [PromotionType.FEEDBACK, PromotionType.FEEDBACK_REMINDER]:
         raise HTTPException(status_code=400, detail="Unsupported promotion type")
     try:
         email_service = EmailService()
