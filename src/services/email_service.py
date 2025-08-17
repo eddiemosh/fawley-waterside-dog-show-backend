@@ -234,7 +234,7 @@ class EmailService:
                   <a href=\"{feedback_url}\" style=\"background: #f63131; color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 18px; font-weight: bold; display: inline-block;\">Give Feedback</a>
                 </div>
                 <p style=\"margin-top: 32px;\">Thank you for helping us support cancer research!</p>
-                <img src=\"cid:dog_thank_you\" alt=\"Thank you dog\" style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
+                <img src=\"cid:salarian_homes\" alt="Thank you dog" style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
               </body>
             </html>
             """
@@ -242,12 +242,12 @@ class EmailService:
         msg = MIMEMultipart()
         msg.attach(MIMEText(body, "html"))
 
-        # Attach the dog thank you image
-        image_path = os.path.join(os.path.dirname(__file__), "../images/dog_thank_you.png")
+        # Attach the Salarian Homes image instead of the dog thank you image
+        image_path = os.path.join(os.path.dirname(__file__), "../images/salarian_homes.png")
         with open(image_path, "rb") as img_file:
             img = MIMEImage(img_file.read())
-            img.add_header("Content-ID", "<dog_thank_you>")
-            img.add_header("Content-Disposition", "inline", filename="Thank You!.png")
+            img.add_header("Content-ID", "<salarian_homes>")
+            img.add_header("Content-Disposition", "inline", filename="Salarian Homes.png")
             msg.attach(img)
 
         try:
