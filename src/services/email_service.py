@@ -225,9 +225,9 @@ class EmailService:
               <body style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">
                 <p>Hi {name.title().strip()},</p>
                 <p style=\"background: #f63131; color: #fff; padding: 12px 18px; border-radius: 6px; font-weight: bold; text-align: center;\">
-                  <strong>We'd really appreciate your feedback if you have 30 seconds!</strong>
+                  <strong>Thank you if you have already provided feedback - if not, we would love to hear from you!</strong>
                 </p>
-                <p>Thank you again for coming to the Fawley Dog Show and supporting cancer research.</p>
+                <p>Thank you again for coming to the Fawley Dog Show and supporting cancer research, we managed to raise roughly £1000!</p>
                 <p>I see you bought the {self._format_ticket_list(tickets)}.</p>
                 <p>Your feedback helps us improve and continue making a difference. Please click the button below to share your thoughts:</p>
                 <div style=\"margin: 24px 0; text-align: center;\">
