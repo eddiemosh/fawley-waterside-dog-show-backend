@@ -233,7 +233,10 @@ class EmailService:
                 <div style=\"margin: 24px 0; text-align: center;\">
                   <a href=\"{feedback_url}\" style=\"background: #f63131; color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-size: 18px; font-weight: bold; display: inline-block;\">Give Feedback</a>
                 </div>
-                <p style=\"margin-top: 32px;\">Thank you for helping us support cancer research!</p>
+                <p><strong>Check out the Composite Doors from our sponsor, Salarian Homes!</strong><br/>
+                For every door purchased, <strong>£25 goes directly to cancer research</strong>.</p>
+                <p>Thank you again for your generosity and for being part of our community.<br/>With gratitude,<br/>
+                The Fawley Dog Show Team</p>
                 <img src=\"cid:salarian_homes\" alt="Thank you dog" style=\"display: block; margin: 10px auto 0 auto; max-width: 300px; width: 100%; height: auto;\"/>
               </body>
             </html>
