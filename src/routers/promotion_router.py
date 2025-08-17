@@ -25,27 +25,22 @@ def send_promotion(promotion_type: PromotionType):
         email_service = EmailService()
         # order_service = OrderService()
         # orders = order_service.get_orders()
-        orders = [Order(
-            order_id="12345",
-            first_name="Ed",
-            last_name="Hardy",
-            email_address="hardyedward18@gmail.com",
-            doggie_info=[DoggieInfo(
-                name="Fido",
-                date_of_birth="2020-01-01",
-                sex="Male"
-            )],
-            pedigree_tickets=PedigreeTickets(
-                any_puppy=1
-            ),
-            all_dog_tickets=AllDogTickets(
-                prettiest=1,
-            ),
-            order_status=True,
-            amount="20.00",
-            date_of_purchase=datetime.now(tz=timezone.utc)
-
-        )]
+        orders = [
+            Order(
+                order_id="12345",
+                first_name="Ed",
+                last_name="Hardy",
+                email_address="hardyedward18@gmail.com",
+                doggie_info=[DoggieInfo(name="Fido", date_of_birth="2020-01-01", sex="Male")],
+                pedigree_tickets=PedigreeTickets(any_puppy=1),
+                all_dog_tickets=AllDogTickets(
+                    prettiest=1,
+                ),
+                order_status=True,
+                amount="20.00",
+                date_of_purchase=datetime.now(tz=timezone.utc),
+            )
+        ]
         ticket_names = {}
         order_names = {}
         for order in orders:
@@ -83,7 +78,9 @@ def send_promotion(promotion_type: PromotionType):
                 if promotion_type == PromotionType.FEEDBACK:
                     email_service.send_feedback_email(name=name, to_email=email, tickets=ticket_names.get(email))
                 elif promotion_type == PromotionType.FEEDBACK_REMINDER:
-                    email_service.send_feedback_reminder_email(name=name, to_email=email, tickets=ticket_names.get(email))
+                    email_service.send_feedback_reminder_email(
+                        name=name, to_email=email, tickets=ticket_names.get(email)
+                    )
                 else:
                     raise HTTPException(status_code=400, detail="Unsupported promotion type")
             except Exception as ex:

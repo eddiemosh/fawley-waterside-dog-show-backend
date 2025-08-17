@@ -23,4 +23,3 @@ class Order(BaseModel):
     all_dog_tickets: Optional[AllDogTickets] = None
     order_status: bool = False
     amount: str
-
