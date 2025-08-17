@@ -22,4 +22,5 @@ class Order(BaseModel):
     pedigree_tickets: Optional[PedigreeTickets] = None
     all_dog_tickets: Optional[AllDogTickets] = None
     order_status: bool = False
-    amount: str = "TBD"
+    amount: str
+
