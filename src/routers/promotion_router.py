@@ -73,6 +73,8 @@ def send_promotion(promotion_type: PromotionType):
                         print("Adding new ticket name for email:", order.email_address)
                         ticket_names[order.email_address] = [ticket_name.replace("_", " ").title()]
         for email, name in order_names.items():
+            if email == "Dee@catbalu.com" or email == "jandybull1@icloud.com" or email == "paulfoxley2@gmail.com":
+                continue
             try:
                 print("Sending feedback email to:", email, "with name:", name, "and tickets:", ticket_names.get(email))
                 if promotion_type == PromotionType.FEEDBACK:
