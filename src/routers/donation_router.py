@@ -52,7 +52,7 @@ def record_donation(payload: dict):
             mode="payment",
         )
         if donation.email_address:
-            EmailService.send_donation_confirmation_email(
+            EmailService().send_donation_confirmation_email(
                 to_email=donation.email_address,
                 name=f"{donation.first_name}",
                 donation_id=donation.donation_id,
