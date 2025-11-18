@@ -32,7 +32,6 @@ uri = f"mongodb+srv://{db_username}:{db_password}@fawley-dogshow.0koebfr.mongodb
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 try:
-    client.collection_names()
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
     original_database = Database().get_db()
