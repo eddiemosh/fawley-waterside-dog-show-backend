@@ -1,12 +1,34 @@
+import json
 import os
 
+import boto3
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import urllib.parse
 
 from src.utils.database import Database
 
-uri = f"mongodb+srv://hardyedward18_db_user:{os.getenv('ATLAS_DATABASE_PASSWORD')}@fawley-dogshow.0koebfr.mongodb.net/?retryWrites=true&w=majority"
+secret_name = os.environ.get("dogshow/mongodb_atlas")
+region_name = os.environ.get("AWS_REGION", "eu-north-1")
+session = boto3.session.Session()
+client = session.client(service_name="secretsmanager", region_name=region_name)
+try:
+    get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+    db_credentials_raw = get_secret_value_response["SecretString"]
+except Exception as e:
+    raise RuntimeError(f"Failed to fetch DB credentials from AWS Secrets Manager: {e}")
+db_credentials = json.loads(db_credentials_raw)
+db_username = None
+db_password = None
+for key, value in db_credentials.items():
+    db_username = key
+    db_password = value
+
+if not db_password:
+    raise RuntimeError("No password found in DB credentials from AWS Secrets Manager")
+
+if not db_username:
+    raise RuntimeError("No username found in DB credentials from AWS Secrets Manager")
+uri = f"mongodb+srv://{db_username}:{db_password}@fawley-dogshow.0koebfr.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 try:
