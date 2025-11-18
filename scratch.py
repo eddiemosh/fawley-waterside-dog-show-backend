@@ -7,7 +7,7 @@ from pymongo.server_api import ServerApi
 
 from src.utils.database import Database
 
-secret_name = os.environ.get("dogshow/mongodb_atlas")
+secret_name = os.environ.get("ATLAS_DB_NAME", "dogshow/atlas_mongodb")
 region_name = os.environ.get("AWS_REGION", "eu-north-1")
 session = boto3.session.Session()
 client = session.client(service_name="secretsmanager", region_name=region_name)
