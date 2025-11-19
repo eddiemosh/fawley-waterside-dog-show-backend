@@ -23,7 +23,7 @@ class Database:
 
     def _fetch_credentials_and_connect(self):
         # Fetch credentials at runtime from AWS Secrets Manager
-        secret_name = os.environ.get("DB_SECRET_NAME", "rds!cluster-8f6430cc-b042-441d-a711-6e561cfcc798")
+        secret_name = os.environ.get("ATLAS_DB_NAME", "dogshow/atlas_mongodb")
         region_name = os.environ.get("AWS_REGION", "eu-north-1")
         session = boto3.session.Session()
         client = session.client(service_name="secretsmanager", region_name=region_name)
@@ -33,14 +33,19 @@ class Database:
         except Exception as e:
             raise RuntimeError(f"Failed to fetch DB credentials from AWS Secrets Manager: {e}")
         db_credentials = json.loads(db_credentials_raw)
-        db_password = db_credentials.get("password")
+        db_username = None
+        db_password = None
+        for key, value in db_credentials.items():
+            db_username = key
+            db_password = value
+
         if not db_password:
             raise RuntimeError("No password found in DB credentials from AWS Secrets Manager")
-        connection_string = (
-            f"mongodb://dogshow:{quote_plus(db_password)}"
-            f"@dogshow.cluster-c3owqu6m8ncl.eu-north-1.docdb.amazonaws.com:27017/?tls=true"
-            f"&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
-        )
+
+        if not db_username:
+            raise RuntimeError("No username found in DB credentials from AWS Secrets Manager")
+        connection_string = f"mongodb+srv://{db_username}:{db_password}@fawley-dogshow.0koebfr.mongodb.net/?retryWrites=true&w=majority"
+
         self._client = MongoClient(connection_string)
         self._db = self._client["dogshow"]
 
